@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35309.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceTime-Server", "SpaceTime-Server\SpaceTime-Server.csproj", "{A86D1B89-9FC3-499C-BFD5-895F8883EB98}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "SpaceTime-Server-GUI", "SpaceTime-Server-GUI\SpaceTime-Server-GUI.esproj", "{3A329D03-8D48-4890-8C54-5917FFE0F9AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A86D1B89-9FC3-499C-BFD5-895F8883EB98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A86D1B89-9FC3-499C-BFD5-895F8883EB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A86D1B89-9FC3-499C-BFD5-895F8883EB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A86D1B89-9FC3-499C-BFD5-895F8883EB98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A329D03-8D48-4890-8C54-5917FFE0F9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A329D03-8D48-4890-8C54-5917FFE0F9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A329D03-8D48-4890-8C54-5917FFE0F9AD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3A329D03-8D48-4890-8C54-5917FFE0F9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A329D03-8D48-4890-8C54-5917FFE0F9AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A329D03-8D48-4890-8C54-5917FFE0F9AD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4FF9F23-9132-48A6-A1E0-9BDA9741A503}
+	EndGlobalSection
+EndGlobal
