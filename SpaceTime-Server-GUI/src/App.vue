@@ -22,17 +22,12 @@
       <li>
         <a href="/files">/files: 文件分发</a>
         <ol>
-          <li><a href="/files/Cealing-Host.json">/files/Cealing-Host.json: Cealing Host (可订阅)</a></li>
-          <li>
-            <a href="/files/Cealing-Host-A.json">/files/Cealing-Host-A.json: Cealing Host A (可订阅)</a>
-          </li>
-          <li>
-            <a href="/files/Cealing-Host-P.json">/files/Cealing-Host-P.json: Cealing Host P (可订阅)</a>
-          </li>
+          <li><a href="/files/Cealing-Host.json">/files/Cealing-Host.json: 内置伪造规则 (可订阅)</a></li>
+          <li><a href="/files/nginx.conf">/files/nginx.conf: 内置 Nginx 配置文件</a></li>
         </ol>
       </li>
     </ul>
-    <p>SpaceTime Server 0.1.5 by Space Time</p>
+    <p>SpaceTime Server 0.1.6 by Space Time</p>
   </main>
 </template>
 
