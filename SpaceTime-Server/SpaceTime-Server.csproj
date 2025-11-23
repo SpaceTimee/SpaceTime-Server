@@ -65,10 +65,4 @@
     </ProjectReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Ona-Core">
-      <HintPath>..\..\Ona-Core\bin\Release\net8.0-windows10.0.22000.0\Ona-Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

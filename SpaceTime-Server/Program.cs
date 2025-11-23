@@ -1,15 +1,14 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using System.IO.Enumeration;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using File = System.IO.File;
-using Http = OnaCore.Http;
 
 HttpClient MainClient = new();
 
@@ -38,10 +37,10 @@ app.MapGet("/api/generate", async (string domain = "wikipedia.org") =>
 {
     string generateDomain = domain.Replace("http://", string.Empty).Replace("https://", string.Empty).Trim().TrimEnd('/');
 
-    if (JsonDocument.Parse(await Http.GetAsync<string>($"https://ns.net.kg/dns-query?name={generateDomain}", MainClient)).RootElement.TryGetProperty("Answer", out JsonElement arashiAnswers))
+    if (JsonDocument.Parse(await MainClient.GetStringAsync($"https://8.8.4.4/resolve?name={generateDomain}")).RootElement.TryGetProperty("Answer", out JsonElement arashiAnswers))
         return $@"[[""*{generateDomain}""],"""",""{arashiAnswers.EnumerateArray().Last().GetProperty("data")}""]";
     else
-        return "生不出来，我很抱歉";
+        return "鐢熸垚澶辫触";
 });
 app.MapGet("/api/search", (IWebHostEnvironment env, string domain = "wikipedia.org") =>
 {
@@ -55,7 +54,7 @@ app.MapGet("/api/search", (IWebHostEnvironment env, string domain = "wikipedia.o
             if (FileSystemName.MatchesSimpleExpression(hostName.ToString(), searchDomain))
                 return hostItem.ToString();
 
-    return "没有找到匹配的规则哦";
+    return "娌℃湁鎵惧埌";
 });
 app.MapGet("/api/check", () =>
 {
