@@ -11,12 +11,6 @@
           </li>
           <li><a href="/api/search">/api/search?[string]domain=wikipedia.org: 搜索内置规则</a></li>
           <li><a href="/api/check">/api/check: 测试内置规则</a></li>
-          <li>
-            <a href="/api/download"
-              >/api/download/[string]file?[string]file=Cealing-Host.json&[string?]mime&[string?]name:
-              下载指定文件</a
-            >
-          </li>
         </ol>
       </li>
       <li>

@@ -7,13 +7,7 @@ import fs from 'fs';
 
 export default defineConfig({
   plugins: [
-    vue(),
-    viteStaticCopy({
-      targets: [{
-        src: ['cert.pem', 'key.pem'],
-        dest: '.'
-      }]
-    })
+    vue()
   ],
   css: {
     preprocessorOptions: {
@@ -28,17 +22,7 @@ export default defineConfig({
     }
   },
   server: {
-    port: 443,
-    host: true,
-    https: {
-      key: fs.readFileSync('./key.pem'),
-      cert: fs.readFileSync('./cert.pem'),
-    },
-    proxy: {
-      '^(^/api)|(^/files)|(^/private/.+)': {
-        target: env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` : env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:5001',
-        secure: false
-      }
-    }
+    port: 5173,
+    host: true
   }
 })
