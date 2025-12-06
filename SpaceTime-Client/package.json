@@ -1,4 +1,5 @@
 {
+  "name": "spacetime-client",
   "private": true,
   "scripts": {
     "dev": "vite",

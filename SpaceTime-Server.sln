@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35309.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceTime-Server", "SpaceTime-Server\SpaceTime-Server.csproj", "{A86D1B89-9FC3-499C-BFD5-895F8883EB98}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "SpaceTime-Server-GUI", "SpaceTime-Server-GUI\SpaceTime-Server-GUI.esproj", "{3A329D03-8D48-4890-8C54-5917FFE0F9AD}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "SpaceTime-Client", "SpaceTime-Client\SpaceTime-Client.esproj", "{3A329D03-8D48-4890-8C54-5917FFE0F9AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

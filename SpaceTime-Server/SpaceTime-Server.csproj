@@ -19,7 +19,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <RootNamespace>SpaceTime_Server.Server</RootNamespace>
-    <SpaRoot>..\Spacetime-Server-GUI</SpaRoot>
+    <SpaRoot>..\Spacetime-Client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost</SpaProxyServerUrl>
   </PropertyGroup>
@@ -60,7 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Spacetime-Server-GUI\SpaceTime-Server-GUI.esproj">
+    <ProjectReference Include="..\Spacetime-Client\SpaceTime-Client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
