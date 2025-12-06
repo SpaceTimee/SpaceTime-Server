@@ -27,4 +27,9 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
   return new Response("没有找到", { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };
 
-const matchesGlob = (pattern: string, text: string) => new RegExp(`^${pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.')}$`, 'i').test(text);
+const matchesGlob = (pattern: string, text: string) => {
+  if (pattern.startsWith('^')) return false;
+  const [includePattern, excludePattern] = pattern.replace(/^([#$])/, '').split('^');
+  const createRegExp = (segment: string) => new RegExp(`^${segment.replace(/[.+^${}()|[\]\\?]/g, '\\$&').replace(/\*/g, '.*')}$`, 'i');
+  return createRegExp(includePattern).test(text) && (!excludePattern || !createRegExp(excludePattern).test(text));
+};
