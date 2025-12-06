@@ -15,8 +15,8 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251205.0",
-    "@tsconfig/node20": "^20.1.8",
-    "@types/node": "^20.19.25",
+    "@tsconfig/node24": "^24.0.3",
+    "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.2",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
