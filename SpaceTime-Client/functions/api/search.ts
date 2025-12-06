@@ -1,42 +1,30 @@
 export const onRequest = async (context: EventContext<unknown, string, unknown>) => {
-  const url = new URL(context.request.url);
-  const domain = (url.searchParams.get('domain') || "wikipedia.org")
+  const domain = (new URL(context.request.url).searchParams.get('domain') || "wikipedia.org")
     .replace(/^https?:\/\//, '').trim().replace(/\/$/, '');
 
   const targetUrl = 'https://github.com/SpaceTimee/Cealing-Host/raw/main/Cealing-Host.json';
   const cacheKey = new Request(targetUrl);
   const cache = (caches as unknown as { default: Cache }).default;
 
-  let fileResponse = await cache.match(cacheKey);
-
-  if (!fileResponse) {
+  let res = await cache.match(cacheKey);
+  if (!res) {
     try {
-      fileResponse = await fetch(targetUrl, { headers: { 'User-Agent': 'Cloudflare-Pages-Function' } });
-      if (!fileResponse.ok) return new Response(`Fetch Error: ${fileResponse.statusText}`, { status: 502 });
-
-      fileResponse = new Response(fileResponse.body, fileResponse);
-      fileResponse.headers.set('Cache-Control', 'public, max-age=600');
-      context.waitUntil(cache.put(cacheKey, fileResponse.clone()));
-    } catch (err) {
-      return new Response(`Internal Error: ${err}`, { status: 500 });
+      res = await fetch(targetUrl, { headers: { 'User-Agent': 'Cloudflare-Pages-Function' } });
+      if (!res.ok) throw 0;
+      res = new Response(res.body, { headers: { 'Cache-Control': 'public, max-age=600' } });
+      context.waitUntil(cache.put(cacheKey, res.clone()));
+    } catch {
+      return new Response("Fetch Error", { status: 502 });
     }
   }
 
   try {
-    const hostArray: [string[], string, string][] = await fileResponse.json();
-    for (const [domains, sni, ip] of hostArray) {
-      if (Array.isArray(domains) && domains.some(d => matchesGlob(d, domain))) {
-        return new Response(JSON.stringify([domains, sni, ip]), { headers: { 'Content-Type': 'application/json; charset=utf-8' } });
-      }
-    }
-  } catch (err) {
-    return new Response(`Parse Error: ${err}`, { status: 500 });
-  }
+    const data: [string[], string, string][] = await res.json();
+    const match = data.find(([domains]) => Array.isArray(domains) && domains.some(pattern => matchesGlob(pattern, domain)));
+    if (match) return new Response(JSON.stringify(match), { headers: { 'Content-Type': 'application/json; charset=utf-8' } });
+  } catch { }
 
   return new Response("没有找到", { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };
 
-const matchesGlob = (pattern: string, text: string): boolean => {
-  const regex = new RegExp(`^${pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.')}$`, 'i');
-  return regex.test(text);
-};
+const matchesGlob = (pattern: string, text: string) => new RegExp(`^${pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.')}$`, 'i').test(text);
