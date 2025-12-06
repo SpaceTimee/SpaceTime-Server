@@ -1,11 +1,10 @@
 {
-  "name": "spacetime-client",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "run-s build serve",
+    "serve": "wrangler pages dev dist",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "pages:dev": "pnpm run build && wrangler pages dev dist",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --fix",
@@ -31,7 +30,7 @@
     "typescript": "~5.9.3",
     "vite": "^7.2.6",
     "vite-plugin-static-copy": "^3.1.4",
-    "vue-tsc": "^3.1.5",
+    "vue-tsc": "^3.1.6",
     "wrangler": "^4.53.0"
   },
   "type": "module"

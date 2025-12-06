@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1564993">
   <PropertyGroup>
-    <StartupCommand>npm run dev</StartupCommand>
+    <StartupCommand>pnpm run dev</StartupCommand>
     <JavaScriptTestRoot>.\</JavaScriptTestRoot>
     <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
     <!-- Allows the build (or compile) script located on package.json to run on Build -->
@@ -13,9 +13,5 @@
     <None Remove="dist\**" />
     <TypeScriptConfiguration Remove=".vscode\**" />
     <TypeScriptConfiguration Remove="dist\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="cert.pem" />
-    <None Remove="key.pem" />
   </ItemGroup>
 </Project>
