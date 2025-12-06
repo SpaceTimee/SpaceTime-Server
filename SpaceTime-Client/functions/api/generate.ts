@@ -3,14 +3,18 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
     .replace(/^https?:\/\//, '').trim().replace(/\/$/, '');
 
   try {
-    const res = await fetch(`https://dns.google/resolve?name=${domain}`, { headers: { Accept: 'application/json' } });
-    if (!res.ok) throw 0;
-    const { Answer } = await res.json() as { Answer?: { data: string }[] };
-    if (Answer?.length) {
-      return new Response(JSON.stringify([[`*${domain}`], "", Answer[Answer.length - 1].data]), {
+    const response = await fetch(`https://dns.google/resolve?name=${domain}`, { headers: { Accept: 'application/json' } });
+    if (!response.ok) throw 0;
+    const { Answer: dnsAnswers } = await response.json() as { Answer?: { data: string }[] };
+    if (dnsAnswers?.length) {
+      return new Response(JSON.stringify([[`*${domain}`], "", dnsAnswers[dnsAnswers.length - 1].data]), {
         headers: { 'Content-Type': 'application/json; charset=utf-8' }
       });
     }
   } catch { }
-  return new Response("生成失败", { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+
+  return new Response(JSON.stringify({ error: "Generation Failed", message: "Unable to resolve domain" }), {
+    status: 500,
+    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+  });
 };

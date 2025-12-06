@@ -1,27 +1,14 @@
 <template>
   <main>
-    <h1>欢迎你，SpaceTime Server 绝赞建设中</h1>
-    <p>当前可使用的功能 :</p>
+    <h1>SpaceTime Server</h1>
+    <p>绝赞建设中，可用功能：</p>
     <ul>
-      <li>
-        <a href="/api">/api: 开放接口</a>
-        <ol>
-          <li>
-            <a href="/api/generate">/api/generate?[string]domain=wikipedia.org: 生成伪造规则</a>
-          </li>
-          <li><a href="/api/search">/api/search?[string]domain=wikipedia.org: 搜索内置规则</a></li>
-          <li><a href="/api/check">/api/check: 测试内置规则</a></li>
-        </ol>
-      </li>
-      <li>
-        <a href="/files">/files: 文件分发</a>
-        <ol>
-          <li><a href="/files/Cealing-Host.json">/files/Cealing-Host.json: 内置伪造规则 (可订阅)</a></li>
-          <li><a href="/files/nginx.conf">/files/nginx.conf: 内置 Nginx 配置文件</a></li>
-        </ol>
-      </li>
+      <li><a href="/api/generate?domain=wikipedia.org">生成伪造规则</a> <code>/api/generate?[string]domain=wikipedia.org</code></li>
+      <li><a href="/api/search?domain=wikipedia.org">搜索内置规则</a> <code>/api/search?[string]domain=wikipedia.org</code></li>
+      <li><a href="/files/Cealing-Host.json">订阅伪造规则</a> <code>/files/Cealing-Host.json</code></li>
+      <li><a href="/files/nginx.conf">Nginx 配置</a> <code>/files/nginx.conf</code></li>
     </ul>
-    <p>SpaceTime Server 0.1.6 by Space Time</p>
+    <p>0.1.6 by Space Time</p>
   </main>
 </template>
 
