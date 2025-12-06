@@ -1,11 +1,11 @@
-export const onRequest = async (context: any) => {
+export const onRequest = async (context: EventContext<unknown, string, unknown>) => {
   const url = new URL(context.request.url);
   const domain = (url.searchParams.get('domain') || "wikipedia.org")
     .replace(/^https?:\/\//, '').trim().replace(/\/$/, '');
 
   const targetUrl = 'https://github.com/SpaceTimee/Cealing-Host/raw/main/Cealing-Host.json';
   const cacheKey = new Request(targetUrl);
-  const cache = (caches as any).default;
+  const cache = (caches as unknown as { default: Cache }).default;
 
   let fileResponse = await cache.match(cacheKey);
 
@@ -23,7 +23,7 @@ export const onRequest = async (context: any) => {
   }
 
   try {
-    const hostArray: any[] = await fileResponse.json();
+    const hostArray: [string[], string, string][] = await fileResponse.json();
     for (const [domains, sni, ip] of hostArray) {
       if (Array.isArray(domains) && domains.some(d => matchesGlob(d, domain))) {
         return new Response(JSON.stringify([domains, sni, ip]), { headers: { 'Content-Type': 'application/json; charset=utf-8' } });

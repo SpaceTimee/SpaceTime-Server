@@ -1,4 +1,4 @@
-export const onRequest = async (context: any) => {
+export const onRequest = async (context: EventContext<unknown, 'filename', unknown>) => {
   const { filename } = context.params;
   if (typeof filename !== 'string') return new Response('Invalid filename', { status: 400 });
 
@@ -11,7 +11,7 @@ export const onRequest = async (context: any) => {
   if (!targetUrl) return new Response('File not found', { status: 404 });
 
   const cacheKey = new Request(context.request.url, context.request);
-  const cache = (caches as any).default;
+  const cache = (caches as unknown as { default: Cache }).default;
 
   let response = await cache.match(cacheKey);
 
