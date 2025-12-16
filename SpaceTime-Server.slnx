@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="SpaceTime-Host/SpaceTime-Host.csproj" />
+  <Project Path="SpaceTime-Client/SpaceTime-Client.esproj">
+    <Build />
+  </Project>
+  <Project Path="SpaceTime-Server/SpaceTime-Server.csproj" />
+  <Project Path="SpaceTime-Defaults/SpaceTime-Defaults.csproj" />
+</Solution>

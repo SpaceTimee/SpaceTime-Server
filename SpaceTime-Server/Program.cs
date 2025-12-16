@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 using System.IO.Enumeration;
@@ -13,6 +14,7 @@ using File = System.IO.File;
 HttpClient MainClient = new();
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.AddServiceDefaults();
 builder.Services.AddResponseCaching();
 builder.Services.AddResponseCompression(options => { options.EnableForHttps = true; });
 builder.Services.AddRequestTimeouts(options => { options.DefaultPolicy = new() { Timeout = TimeSpan.FromMinutes(10) }; });
@@ -25,6 +27,9 @@ app.UseResponseCaching();
 app.UseResponseCompression();
 app.UseRequestTimeouts();
 app.UseFileServer(true);
+app.MapDefaultEndpoints();
+app.UseDefaultFiles();
+app.MapStaticAssets();
 app.MapOpenApi("/private/{documentName}.json");
 app.UseSwaggerUI(options =>
 {
