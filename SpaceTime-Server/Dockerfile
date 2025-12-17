@@ -8,6 +8,7 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS publish
 WORKDIR /src
+COPY ["SpaceTime-Defaults/SpaceTime-Defaults.csproj", "SpaceTime-Defaults/"]
 COPY ["SpaceTime-Server/SpaceTime-Server.csproj", "SpaceTime-Server/"]
 RUN dotnet restore "./SpaceTime-Server/SpaceTime-Server.csproj"
 COPY . .
