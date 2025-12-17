@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
     "https": {
       "commandName": "Project",
@@ -25,5 +24,6 @@
         "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "http://localhost:20072"
       }
     }
-  }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json"
 }

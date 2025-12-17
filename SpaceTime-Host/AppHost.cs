@@ -1,5 +1,8 @@
-var builder = DistributedApplication.CreateBuilder(args);
+using Aspire.Hosting;
+using Projects;
 
-builder.AddProject<Projects.SpaceTime_Server_Server>("spacetime-server-server");
+IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
+
+builder.AddProject<SpaceTime_Server>("spacetime-server");
 
 builder.Build().Run();

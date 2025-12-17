@@ -1,6 +1,0 @@
-@SpaceTime_Server.Server_HostAddress = http://localhost:5189
-
-GET {{SpaceTime_Server.Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

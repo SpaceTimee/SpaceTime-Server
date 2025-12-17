@@ -1,70 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TypeScriptTarget>ESNext</TypeScriptTarget>
-    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
-    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
-    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
-  </PropertyGroup>
-
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <TypeScriptTarget>ESNext</TypeScriptTarget>
-    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
-    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
-    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
-  </PropertyGroup>
-
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <RootNamespace>SpaceTime_Server</RootNamespace>
     <ImplicitUsings>disable</ImplicitUsings>
-    <RootNamespace>SpaceTime_Server.Server</RootNamespace>
-    <UserSecretsId>9ce63926-aaf6-4237-8296-eeb87d7a8c90</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <SpaRoot>..\Spacetime-Client</SpaRoot>
-    <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
-    <SpaProxyServerUrl>https://localhost</SpaProxyServerUrl>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
-    <OpenApiDocumentsDirectory>$(MSBuildProjectDirectory)</OpenApiDocumentsDirectory>
-    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
     <NoWin32Manifest>true</NoWin32Manifest>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <ErrorReport>none</ErrorReport>
     <ApplicationIcon>SpaceTime-Server-Logo.ico</ApplicationIcon>
-    <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
+    <OpenApiDocumentsDirectory>$(MSBuildProjectDirectory)</OpenApiDocumentsDirectory>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="SpaceTime-Server-Logo.ico" />
-	<Content Update="wwwroot\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="SpaceTime-Server-Logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="*" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.11" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="9.0.0-rc.1.24452.1" />
-    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0-rc.1.24452.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.8.0" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.11" />
+    <PackageReference Include="Scalar.AspNetCore" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Spacetime-Client\SpaceTime-Client.esproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\SpaceTime-Defaults\SpaceTime-Defaults.csproj" />
   </ItemGroup>
 
