@@ -25,4 +25,8 @@
     <PackageReference Include="Scalar.AspNetCore" Version="*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceTime-Defaults\SpaceTime-Defaults.csproj" />
+  </ItemGroup>
+
 </Project>
