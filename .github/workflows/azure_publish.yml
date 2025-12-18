@@ -7,19 +7,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  publish-app:
+    name: Publish App
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout to the branch
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Azure Login
+      - name: Login Azure
         uses: azure/login@v2
         with:
           creds: ${{ secrets.SPACETIMESERVER_AZURE_CREDENTIALS }}
 
-      - name: Build and push container image to registry
+      - name: Deploy App
         uses: azure/container-apps-deploy-action@v2
         with:
           appSourcePath: ${{ github.workspace }}
