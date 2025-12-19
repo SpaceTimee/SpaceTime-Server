@@ -6,10 +6,10 @@
       <li><a href="/api/generate?domain=wikipedia.org">生成伪造规则</a> <code>/api/generate?[string]domain=wikipedia.org</code></li>
       <li><a href="/api/search?domain=wikipedia.org">搜索内置规则</a> <code>/api/search?[string]domain=wikipedia.org</code></li>
       <li><a href="/api/check">测试内置规则</a> <code>/api/check</code></li>
-      <li><a href="/files/Cealing-Host.json">订阅伪造规则</a> <code>/files/Cealing-Host.json</code></li>
-      <li><a href="/files/nginx.conf">Nginx 配置</a> <code>/files/nginx.conf</code></li>
+      <li><a href="/files/Cealing-Host.json">订阅内置规则</a> <code>/files/Cealing-Host.json</code></li>
+      <li><a href="/files/nginx.conf">查看 Nginx 配置</a> <code>/files/nginx.conf</code></li>
     </ul>
-    <p>0.1.6 by Space Time</p>
+    <p>0.2.0 by Space Time</p>
   </main>
 </template>
 
