@@ -1,0 +1,38 @@
+name: GitHub Backup
+
+on:
+  workflow_run:
+    workflows:
+      - Azure Publish
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  backup-mirror:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      packages: write
+
+    steps:
+      - name: Login Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.SPACETIMESERVER_REGISTRY_USERNAME }}
+          password: ${{ secrets.SPACETIMESERVER_REGISTRY_PASSWORD }}
+
+      - name: Login Ghcr
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Mirror
+        run: |
+          SOURCE_IMAGE="spacetimee/spacetime-server:${{ github.event.workflow_run.head_sha }}"
+          TARGET_IMAGE="ghcr.io/$SOURCE_IMAGE"
+          docker pull "$SOURCE_IMAGE"
+          docker tag "$SOURCE_IMAGE" "$TARGET_IMAGE"
+          docker push "$TARGET_IMAGE"
