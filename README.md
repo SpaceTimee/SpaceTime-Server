@@ -8,6 +8,13 @@
 ## 注意事项
 本项目仅供**学习参考**，无意绕过任何审查设备的审查
 
+## 部署地址
+[https://server.spacetimee.xyz](https://server.spacetimee.xyz)
+
+## 镜像地址
+1. Docker Hub (首选): [spacetimee/spacetime-server](https://hub.docker.com/r/spacetimee/spacetime-server)
+2. GitHub Container Registry: [ghcr.io/spacetimee/spacetime-server](https://github.com/spacetimee/SpaceTime-Server/pkgs/container/spacetime-server)
+
 ## 开发者
 **Space Time**
 
