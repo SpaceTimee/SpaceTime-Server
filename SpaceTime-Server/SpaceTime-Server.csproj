@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <InformationalVersion>0.2.3</InformationalVersion>
+    <InformationalVersion>0.2.4</InformationalVersion>
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>SpaceTime_Server</RootNamespace>
     <ImplicitUsings>disable</ImplicitUsings>
