@@ -26,5 +26,10 @@ coverage
 *.sln
 *.sw?
 
+# Package Manager
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
 *.tsbuildinfo
 .wrangler/
