@@ -35,9 +35,9 @@ app.UseHttpsRedirection().
         EnableDirectoryBrowsing = true
     });
 
-
 app.MapGet("/", () => Results.File(Path.Combine(builder.Environment.ContentRootPath, "dashboard.html"), "text/html")).ExcludeFromDescription();
 app.MapGet("/favicon.ico", () => Results.File(Path.Combine(builder.Environment.ContentRootPath, "favicon.ico"), "image/x-icon")).ExcludeFromDescription();
+app.MapFallback(() => Results.File(Path.Combine(builder.Environment.ContentRootPath, "dashboard.html"), "text/html"));
 
 app.MapStaticAssets();
 app.MapDefaultEndpoints();
