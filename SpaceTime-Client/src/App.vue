@@ -12,10 +12,12 @@
         <code>/api/search?[string]domain=wikipedia.org</code>
       </li>
       <li><a href="/api/check">测试内置规则</a> <code>/api/check</code></li>
-      <li><a href="/files/Cealing-Host.json">订阅内置规则</a> <code>/files/Cealing-Host.json</code></li>
-      <li><a href="/files/nginx.conf">查看 Nginx 配置</a> <code>/files/nginx.conf</code></li>
+      <li>
+        <a href="/files/Cealing-Host.json">下载指定文件</a>
+        <code>/files/[string]path=Cealing-Host.json</code>
+      </li>
     </ul>
-    <p>0.3.0 by Space Time</p>
+    <p>0.3.1 by Space Time</p>
   </main>
 </template>
 

@@ -1,11 +1,11 @@
-export const onRequest = async (context: EventContext<Env, 'filename', unknown>) => {
-  const filename = context.params.filename as string
+export const onRequest = async (context: EventContext<Env, 'path', unknown>) => {
+  const filePath = (context.params.path as string[] | undefined)?.join('/') || 'Cealing-Host.json'
   const fileMap: Record<string, string> = {
     'Cealing-Host.json': 'https://github.com/SpaceTimee/Cealing-Host/raw/main/Cealing-Host.json',
     'nginx.conf': 'https://github.com/SpaceTimee/Cealing-Host/raw/main/nginx.conf'
   }
 
-  const url = fileMap[filename] || `${context.env.API_URL ?? 'http://localhost'}/files/${filename}`
+  const url = fileMap[filePath] || `${context.env.API_URL ?? 'http://localhost'}/files/${filePath}`
   const cacheKey = new Request(context.request.url)
   const cache = (caches as unknown as { default: Cache }).default
 
@@ -19,7 +19,7 @@ export const onRequest = async (context: EventContext<Env, 'filename', unknown>)
 
       const contentType = response.headers.get('content-type')
 
-      if (!fileMap[filename] && contentType?.includes('text/html')) {
+      if (!fileMap[filePath] && contentType?.includes('text/html')) {
         return new Response('Not found', {
           status: 404,
           headers: { 'Content-Type': 'text/plain; charset=utf-8' }
