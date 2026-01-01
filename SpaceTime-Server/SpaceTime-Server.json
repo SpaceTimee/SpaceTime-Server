@@ -1,9 +1,0 @@
-{
-  "openapi": "3.0.1",
-  "info": {
-    "title": "SpaceTime Server",
-    "version": "0.2.4"
-  },
-  "paths": { },
-  "components": { }
-}

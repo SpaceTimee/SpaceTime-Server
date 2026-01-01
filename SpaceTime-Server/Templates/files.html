@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      --color-bg: #fff;
+      --color-text: #1b1b1b;
+      --color-border: #d0d7de;
+      --color-hover: #f6f8fa;
+      --color-accent: #ff5a00;
+      --color-header: #f6f6f6;
+      --color-folder: #54aeff;
+      --color-file: #8c959f;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--color-text);
+      background: var(--color-bg);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      padding: 8px;
+      background: color-mix(in srgb, var(--color-header) 85%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #757575;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover:not(.disabled) {
+      background: rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.5;
+      cursor: default;
+      pointer-events: none;
+      background: #f6f8fa;
+    }
+
+    .nav-btn .icon {
+      margin-right: 0;
+    }
+
+    .path-container {
+      flex: 1;
+      position: relative;
+      margin-right: 40px;
+    }
+
+    .path-input {
+      width: 100%;
+      padding: 6px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 20px;
+      outline: none;
+      box-shadow: inset 0 1px 2px rgba(27, 31, 36, 0.075);
+      background: #fff;
+      color: var(--color-text);
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    .path-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(255, 90, 0, 0.3);
+    }
+
+    .file-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 2px;
+      font-size: 14px;
+      table-layout: auto;
+      padding: 0 8px;
+    }
+
+    thead {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    th {
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--color-border);
+      font-weight: 600;
+      color: #757575;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 8px 12px;
+      vertical-align: middle;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    td:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+
+    td:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+
+    tbody tr {
+      transition: background 0.15s ease;
+      cursor: pointer;
+    }
+
+    tr:hover td {
+      background: var(--color-hover);
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      vertical-align: text-bottom;
+      flex-shrink: 0;
+      display: inline-block;
+      background: currentColor;
+      -webkit-mask: var(--icon-url) no-repeat center / contain;
+      mask: var(--icon-url) no-repeat center / contain;
+    }
+
+    .icon-folder {
+      color: var(--color-folder);
+      --icon-url: url('/icons/folder.svg');
+    }
+
+    .icon-file {
+      color: var(--color-file);
+      --icon-url: url('/icons/file.svg');
+    }
+
+    .icon-image {
+      color: #bf3989;
+      --icon-url: url('/icons/image.svg');
+    }
+
+    .icon-video {
+      color: #cf222e;
+      --icon-url: url('/icons/video.svg');
+    }
+
+    .icon-audio {
+      color: #8a1b9a;
+      --icon-url: url('/icons/audio.svg');
+    }
+
+    .icon-archive {
+      color: #d96900;
+      --icon-url: url('/icons/archive.svg');
+    }
+
+    .icon-code {
+      color: #1a7f37;
+      --icon-url: url('/icons/code.svg');
+    }
+
+    .icon-text {
+      color: #0969da;
+      --icon-url: url('/icons/text.svg');
+    }
+
+    .icon-pdf {
+      color: #bc1c1c;
+      --icon-url: url('/icons/text.svg');
+    }
+
+    .col-name {
+      width: 100%;
+      max-width: 0;
+    }
+
+    .col-size {
+      width: 1px;
+      text-align: left;
+      color: #757575;
+    }
+
+    td.col-size {
+      font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    }
+
+    .col-date {
+      width: 1px;
+      color: #757575;
+      text-align: left;
+    }
+
+    .file-link {
+      text-decoration: none;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="toolbar">
+    <a href="{{PARENT_LINK}}" class="nav-btn {{PARENT_DISABLED}}" title="Up" aria-label="Up one level">
+      <div class="icon" style="--icon-url: url('/icons/up.svg'); background: #757575;"></div>
+    </a>
+    <div class="path-container">
+      <input type="text" class="path-input" value="{{PATH}}" id="path-input" spellcheck="false"
+        aria-label="Current path">
+    </div>
+  </header>
+
+  <main class="file-list">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-name">Name</th>
+          <th class="col-size">Size</th>
+          <th class="col-date">Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <script type="application/json" id="file-data">{{FILES_JSON}}</script>
+
+  <script>
+    (() => {
+      const escapeHtml = (text) => text ? text.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]) : '';
+      const fileData = JSON.parse(document.getElementById('file-data').textContent);
+      const tableBody = document.querySelector('tbody');
+      const pathInput = document.getElementById('path-input');
+
+      tableBody.innerHTML = fileData.map(file => `
+        <tr>
+          <td><a href="${escapeHtml(file.link)}" class="file-link"${file.isDir ? '' : ' target="_blank"'}><div class="icon ${file.icon}"></div>${escapeHtml(file.name)}</a></td>
+          <td class="col-size">${escapeHtml(file.size)}</td>
+          <td class="col-date">${escapeHtml(file.date)}</td>
+        </tr>
+      `).join('');
+
+      pathInput.addEventListener('keydown', event => { if (event.key === 'Enter') navigateToPath(pathInput.value); });
+      pathInput.addEventListener('focus', event => event.target.select());
+      tableBody.addEventListener('click', event => { if (!event.target.closest('a')) event.target.closest('tr')?.querySelector('.file-link')?.click(); });
+
+      function navigateToPath(path) {
+        path = path.trim();
+        if (!path.startsWith('/')) path = '/' + path;
+        location.href = '/files' + path.replace(/\/+/g, '/');
+      }
+    })();
+  </script>
+</body>
+
+</html>

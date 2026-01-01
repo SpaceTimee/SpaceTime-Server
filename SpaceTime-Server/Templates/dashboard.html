@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <base target="_blank">
   <link rel="icon" href="/favicon.ico">
   <title>SpaceTime Server</title>
   <style>
@@ -23,76 +22,66 @@
       border: none;
     }
 
-    #files-container {
+    #file-browser {
       position: fixed;
       bottom: 20px;
       right: 20px;
       width: 300px;
       height: 400px;
-
       background: white;
       border: 1px solid #ccc;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       z-index: 1000;
-
       display: flex;
       flex-direction: column;
       overflow: hidden;
-
       transform-origin: bottom right;
-      transform: scale(1);
-      opacity: 1;
-      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.25);
-      transition-delay: 0.2s;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 0.2s;
     }
 
-    #files-container.hidden {
+    #file-browser.collapsed {
       transform: scale(0);
       opacity: 0;
       pointer-events: none;
       transition: all 0.2s cubic-bezier(0.7, 0, 0.84, 0);
-      transition-delay: 0s;
     }
 
-    #files-frame {
+    #file-frame {
       flex: 1;
       width: 100%;
       border: none;
     }
 
-    #minimize-btn {
+    #collapse-btn {
       position: absolute;
       top: 8px;
       right: 8px;
       width: 32px;
       height: 32px;
       z-index: 10;
-
       background: transparent;
       border: none;
       border-radius: 50%;
       cursor: pointer;
-
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #666;
+      color: #757575;
       transition: all 0.2s ease;
     }
 
-    #minimize-btn:hover {
+    #collapse-btn:hover {
       background: rgba(0, 0, 0, 0.1);
       color: #333;
     }
 
-    #files-restore-btn {
+    #expand-btn {
       position: fixed;
       bottom: 20px;
       right: 20px;
       z-index: 1000;
-
-      background: #FF5A00;
+      background: #ff5a00;
       color: white;
       border: none;
       border-radius: 50px;
@@ -101,26 +90,30 @@
       font-size: 14px;
       box-shadow: 0 4px 12px rgba(255, 90, 0, 0.4);
       cursor: pointer;
-
       display: flex;
       align-items: center;
       gap: 8px;
-
       transform: scale(0);
       pointer-events: none;
       transition: all 0.2s cubic-bezier(0.7, 0, 0.84, 0);
     }
 
-    #files-restore-btn.visible {
+    #expand-btn.active {
       transform: scale(1);
       pointer-events: auto;
-      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.25);
-      transition-delay: 0.2s;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.25) 0.2s;
     }
 
-    #files-restore-btn.visible:hover {
+    #expand-btn.active:hover {
       background: #e65100;
       transform: scale(1.05);
+    }
+
+    .icon {
+      display: inline-block;
+      background-color: currentColor;
+      -webkit-mask: var(--icon-url) no-repeat center / contain;
+      mask: var(--icon-url) no-repeat center / contain;
     }
   </style>
 </head>
@@ -128,38 +121,31 @@
 <body>
   <iframe id="api-frame" src="/api/" title="API Reference"></iframe>
 
-  <div id="files-container" class="hidden" role="complementary" aria-label="File Browser">
-    <button id="minimize-btn" title="Minimize" aria-label="Minimize Files Window">
-      <i data-lucide="chevron-down"></i>
+  <div id="file-browser" class="collapsed" role="complementary" aria-label="File Browser">
+    <button id="collapse-btn" title="Collapse" aria-label="Collapse file browser">
+      <div class="icon" style="width: 24px; height: 24px; --icon-url: url('/icons/minimize.svg');"></div>
     </button>
-    <iframe id="files-frame" src="/files/" title="File List"></iframe>
+    <iframe id="file-frame" src="/files/" title="File List"></iframe>
   </div>
 
-  <button id="files-restore-btn" class="visible" aria-label="Restore Files Window">
-    <i data-lucide="folder" width="18" height="18"></i>
+  <button id="expand-btn" class="active" aria-label="Expand file browser">
+    <div class="icon" style="width: 18px; height: 18px; --icon-url: url('/icons/folder.svg');"></div>
     <span>Files</span>
   </button>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
   <script>
-    lucide.createIcons();
+    (() => {
+      const fileBrowser = document.getElementById('file-browser');
+      const expandBtn = document.getElementById('expand-btn');
 
-    const filesContainer = document.getElementById('files-container');
-    const restoreBtn = document.getElementById('files-restore-btn');
-    const minimizeBtn = document.getElementById('minimize-btn');
+      const setExpanded = (expanded) => {
+        fileBrowser.classList.toggle('collapsed', !expanded);
+        expandBtn.classList.toggle('active', !expanded);
+      };
 
-    function minimizeFiles() {
-      filesContainer.classList.add('hidden');
-      restoreBtn.classList.add('visible');
-    }
-
-    function restoreFiles() {
-      filesContainer.classList.remove('hidden');
-      restoreBtn.classList.remove('visible');
-    }
-
-    minimizeBtn.addEventListener('click', minimizeFiles);
-    restoreBtn.addEventListener('click', restoreFiles);
+      document.getElementById('collapse-btn').onclick = () => setExpanded(false);
+      expandBtn.onclick = () => setExpanded(true);
+    })();
   </script>
 </body>
 
