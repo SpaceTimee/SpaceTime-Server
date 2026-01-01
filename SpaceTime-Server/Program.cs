@@ -84,7 +84,13 @@ app.MapGet("/files/{*path}", async (string? path, IAmazonS3 client, IOptions<Sto
                 date = isDir ? "-" : file.LastModified.ToString("yyyy-MM-dd HH:mm:ss")
             };
         }))).ToString(), "text/html");
-});
+}).
+WithSummary("Download Files").
+WithDescription("Browse directories and download files").
+WithTags("Files").
+Produces<string>(StatusCodes.Status200OK, "text/html").
+Produces(StatusCodes.Status302Found).
+ProducesProblem(StatusCodes.Status500InternalServerError);
 
 app.MapGet("/", () => Results.File(Path.Combine(contentRootPath, "Templates", "dashboard.html"), "text/html")).ExcludeFromDescription();
 app.MapGet("/favicon.ico", () => Results.File(Path.Combine(contentRootPath, "favicon.ico"), "image/x-icon")).ExcludeFromDescription();
