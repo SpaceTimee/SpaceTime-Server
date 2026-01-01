@@ -10,12 +10,11 @@
     :root {
       --color-bg: #fff;
       --color-text: #1b1b1b;
+      --color-muted: #757575;
       --color-border: #d0d7de;
       --color-hover: #f6f8fa;
       --color-accent: #ff5a00;
       --color-header: #f6f6f6;
-      --color-folder: #54aeff;
-      --color-file: #8c959f;
     }
 
     body {
@@ -51,21 +50,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #757575;
+      color: var(--color-muted);
       text-decoration: none;
       transition: all 0.2s ease;
     }
 
     .nav-btn:hover:not(.disabled) {
       background: rgba(0, 0, 0, 0.1);
-      color: #333;
+      color: var(--color-text);
     }
 
     .nav-btn.disabled {
       opacity: 0.5;
-      cursor: default;
       pointer-events: none;
-      background: #f6f8fa;
+      background: var(--color-hover);
     }
 
     .nav-btn .icon {
@@ -74,7 +72,6 @@
 
     .path-container {
       flex: 1;
-      position: relative;
       margin-right: 40px;
     }
 
@@ -83,13 +80,13 @@
       padding: 6px 12px;
       border: 1px solid var(--color-border);
       border-radius: 6px;
+      font: inherit;
       font-size: 14px;
       line-height: 20px;
       outline: none;
       box-shadow: inset 0 1px 2px rgba(27, 31, 36, 0.075);
-      background: #fff;
+      background: var(--color-bg);
       color: var(--color-text);
-      font-family: inherit;
       box-sizing: border-box;
     }
 
@@ -108,7 +105,6 @@
       border-collapse: separate;
       border-spacing: 0 2px;
       font-size: 14px;
-      table-layout: auto;
       padding: 0 8px;
     }
 
@@ -123,10 +119,47 @@
     th {
       text-align: left;
       padding: 8px 12px;
-      border-bottom: 1px solid var(--color-border);
       font-weight: 600;
-      color: #757575;
+      color: var(--color-muted);
       white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+
+    th:hover {
+      color: var(--color-text);
+      background: var(--color-hover);
+    }
+
+    th:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+
+    th:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+
+    .sort-icon {
+      width: 12px;
+      height: 12px;
+      margin-left: 4px;
+      vertical-align: middle;
+      opacity: 0.3;
+      transition: transform 0.2s;
+      display: inline-block;
+      background: currentColor;
+      -webkit-mask: url('/icons/minimize.svg') no-repeat center / contain;
+      mask: url('/icons/minimize.svg') no-repeat center / contain;
+    }
+
+    th.asc .sort-icon {
+      opacity: 1;
+      transform: rotate(180deg);
+    }
+
+    th.desc .sort-icon {
+      opacity: 1;
     }
 
     td {
@@ -150,7 +183,7 @@
       cursor: pointer;
     }
 
-    tr:hover td {
+    tbody tr:hover td {
       background: var(--color-hover);
     }
 
@@ -167,12 +200,12 @@
     }
 
     .icon-folder {
-      color: var(--color-folder);
+      color: #54aeff;
       --icon-url: url('/icons/folder.svg');
     }
 
     .icon-file {
-      color: var(--color-file);
+      color: #8c959f;
       --icon-url: url('/icons/file.svg');
     }
 
@@ -216,20 +249,14 @@
       max-width: 0;
     }
 
-    .col-size {
+    .col-size,
+    .col-date {
       width: 1px;
-      text-align: left;
-      color: #757575;
+      color: var(--color-muted);
     }
 
     td.col-size {
-      font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-    }
-
-    .col-date {
-      width: 1px;
-      color: #757575;
-      text-align: left;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
     .file-link {
@@ -247,7 +274,7 @@
 <body>
   <header class="toolbar">
     <a href="{{PARENT_LINK}}" class="nav-btn {{PARENT_DISABLED}}" title="Up" aria-label="Up one level">
-      <div class="icon" style="--icon-url: url('/icons/up.svg'); background: #757575;"></div>
+      <div class="icon" style="--icon-url: url('/icons/up.svg');"></div>
     </a>
     <div class="path-container">
       <input type="text" class="path-input" value="{{PATH}}" id="path-input" spellcheck="false"
@@ -259,12 +286,15 @@
     <table>
       <thead>
         <tr>
-          <th class="col-name">Name</th>
-          <th class="col-size">Size</th>
-          <th class="col-date">Date</th>
+          <th data-key="name" class="col-name">Name <div class="sort-icon"></div>
+          </th>
+          <th data-key="size" class="col-size">Size <div class="sort-icon"></div>
+          </th>
+          <th data-key="date" class="col-date">Date <div class="sort-icon"></div>
+          </th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="file-table"></tbody>
     </table>
   </main>
 
@@ -272,28 +302,58 @@
 
   <script>
     (() => {
-      const escapeHtml = (text) => text ? text.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]) : '';
+      const escapeHtml = text => text?.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]) ?? '';
+      const parseSize = sizeStr => sizeStr && sizeStr !== '-' ? parseFloat(sizeStr) * 1024 ** ['B', 'KB', 'MB', 'GB', 'TB'].indexOf(sizeStr.split(' ')[1]) : -1;
+
       const fileData = JSON.parse(document.getElementById('file-data').textContent);
-      const tableBody = document.querySelector('tbody');
+      const tableBody = document.getElementById('file-table');
+      const tableHeaders = document.querySelectorAll('th[data-key]');
       const pathInput = document.getElementById('path-input');
 
-      tableBody.innerHTML = fileData.map(file => `
-        <tr>
+      let sortKey = 'name', sortAsc = true;
+
+      const render = () => {
+        fileData.sort((fileA, fileB) => {
+          if (fileA.isDir !== fileB.isDir) return fileA.isDir ? -1 : 1;
+          let result;
+          if (sortKey === 'size') {
+            result = parseSize(fileA.size) - parseSize(fileB.size);
+          } else if (sortKey === 'date') {
+            result = fileA.date.localeCompare(fileB.date);
+          } else {
+            result = fileA.name.localeCompare(fileB.name, undefined, { sensitivity: 'base' });
+          }
+          return sortAsc ? result : -result;
+        });
+
+        tableHeaders.forEach(header => {
+          header.classList.toggle('asc', header.dataset.key === sortKey && sortAsc);
+          header.classList.toggle('desc', header.dataset.key === sortKey && !sortAsc);
+        });
+
+        tableBody.innerHTML = fileData.map(file => `<tr>
           <td><a href="${escapeHtml(file.link)}" class="file-link"${file.isDir ? '' : ' target="_blank"'}><div class="icon ${file.icon}"></div>${escapeHtml(file.name)}</a></td>
           <td class="col-size">${escapeHtml(file.size)}</td>
           <td class="col-date">${escapeHtml(file.date)}</td>
-        </tr>
-      `).join('');
+        </tr>`).join('');
+      };
 
-      pathInput.addEventListener('keydown', event => { if (event.key === 'Enter') navigateToPath(pathInput.value); });
+      tableHeaders.forEach(header => header.addEventListener('click', () => {
+        const key = header.dataset.key;
+        [sortKey, sortAsc] = sortKey === key ? [key, !sortAsc] : [key, key === 'name'];
+        render();
+      }));
+
+      pathInput.addEventListener('keydown', event => {
+        if (event.key !== 'Enter') return;
+        let path = pathInput.value.trim();
+        location.href = '/files' + (path.startsWith('/') ? path : '/' + path).replace(/\/+/g, '/');
+      });
+
       pathInput.addEventListener('focus', event => event.target.select());
-      tableBody.addEventListener('click', event => { if (!event.target.closest('a')) event.target.closest('tr')?.querySelector('.file-link')?.click(); });
+      tableBody.addEventListener('click', event => { if (!event.target.closest('a')) event.target.closest('tr')?.querySelector('a')?.click(); });
 
-      function navigateToPath(path) {
-        path = path.trim();
-        if (!path.startsWith('/')) path = '/' + path;
-        location.href = '/files' + path.replace(/\/+/g, '/');
-      }
+      render();
     })();
   </script>
 </body>

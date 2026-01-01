@@ -7,6 +7,11 @@
   <link rel="icon" href="/favicon.ico">
   <title>SpaceTime Server</title>
   <style>
+    :root {
+      --color-text: #1b1b1b;
+      --color-muted: #757575;
+    }
+
     body,
     html {
       margin: 0;
@@ -67,13 +72,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #757575;
+      color: var(--color-muted);
       transition: all 0.2s ease;
     }
 
     #collapse-btn:hover {
       background: rgba(0, 0, 0, 0.1);
-      color: #333;
+      color: var(--color-text);
     }
 
     #expand-btn {
