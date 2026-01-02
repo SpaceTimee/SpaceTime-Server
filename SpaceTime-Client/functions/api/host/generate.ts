@@ -9,11 +9,11 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
   try {
     const response = await fetch(`https://dns.google/resolve?name=${domain}`)
 
-    if (!response.ok) throw 0
+    if (!response.ok) throw new Error()
 
     const { Answer: dnsAnswers } = (await response.json()) as { Answer?: { data: string }[] }
 
-    if (!dnsAnswers?.length) throw 0
+    if (!dnsAnswers?.length) throw new Error()
 
     result = dnsAnswers[dnsAnswers.length - 1].data
   } catch {

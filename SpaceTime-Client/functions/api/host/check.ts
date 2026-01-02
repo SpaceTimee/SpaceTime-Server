@@ -9,7 +9,7 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
     try {
       response = await fetch(targetUrl)
 
-      if (!response.ok) throw 0
+      if (!response.ok) throw new Error()
 
       response = new Response(response.body, {
         headers: {

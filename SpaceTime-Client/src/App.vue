@@ -4,20 +4,20 @@
     <p>绝赞建设中，可用功能：</p>
     <ul>
       <li>
-        <a href="/api/generate?domain=wikipedia.org">生成伪造规则</a>
-        <code>/api/generate?[string]domain=wikipedia.org</code>
+        <a href="/api/host/generate?domain=wikipedia.org">生成伪造规则</a>
+        <code>/api/host/generate?[string]domain=wikipedia.org</code>
       </li>
       <li>
-        <a href="/api/search?domain=wikipedia.org">搜索内置规则</a>
-        <code>/api/search?[string]domain=wikipedia.org</code>
+        <a href="/api/host/search?domain=wikipedia.org">搜索内置规则</a>
+        <code>/api/host/search?[string]domain=wikipedia.org</code>
       </li>
-      <li><a href="/api/check">测试内置规则</a> <code>/api/check</code></li>
+      <li><a href="/api/host/check">测试内置规则</a> <code>/api/host/check</code></li>
       <li>
-        <a href="/files/Cealing-Host.json">下载指定文件</a>
-        <code>/files/[string]path=Cealing-Host.json</code>
+        <a href="/files/host/Cealing-Host.json">下载内置规则</a>
+        <code>/files/host/[string]path=Cealing-Host.json</code>
       </li>
     </ul>
-    <p>0.3.1 by Space Time</p>
+    <p>0.3.2 by Space Time</p>
   </main>
 </template>
 

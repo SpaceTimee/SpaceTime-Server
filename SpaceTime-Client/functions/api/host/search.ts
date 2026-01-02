@@ -14,7 +14,7 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
     try {
       response = await fetch(targetUrl)
 
-      if (!response.ok) throw 0
+      if (!response.ok) throw new Error()
 
       response = new Response(response.body, { headers: { 'Cache-Control': 'public, max-age=600' } })
 
@@ -36,7 +36,7 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
       ([domains]) => Array.isArray(domains) && domains.some((pattern) => glob(pattern, domain))
     )
 
-    if (!match) throw 0
+    if (!match) throw new Error()
   } catch {
     return new Response(JSON.stringify({ error: 'Not Found', message: 'Domain not found in database' }), {
       status: 404,
