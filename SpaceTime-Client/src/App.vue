@@ -16,8 +16,12 @@
         <a href="/files/host/Cealing-Host.json">下载内置规则</a>
         <code>/files/host/[string]path=Cealing-Host.json</code>
       </li>
+      <li>
+        <a href="/files/gallery/SpaceTime-Server-0.2.0.mp4">下载宣传物料</a>
+        <code>/files/gallery/[string]path=SpaceTime-Server-0.2.0.mp4</code>
+      </li>
     </ul>
-    <p>0.3.2 by Space Time</p>
+    <p>0.3.3 by Space Time</p>
   </main>
 </template>
 
