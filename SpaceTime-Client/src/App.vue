@@ -13,15 +13,19 @@
       </li>
       <li><a href="/api/host/check">测试内置规则</a> <code>/api/host/check</code></li>
       <li>
-        <a href="/files/host/Cealing-Host.json">下载内置规则</a>
+        <a href="/files/host/Cealing-Host.json">订阅内置规则</a>
         <code>/files/host/[string]path=Cealing-Host.json</code>
       </li>
       <li>
         <a href="/files/gallery/SpaceTime-Server-0.2.0.mp4">下载宣传物料</a>
         <code>/files/gallery/[string]path=SpaceTime-Server-0.2.0.mp4</code>
       </li>
+      <li>
+        <a href="/files/blog/atom.xml">订阅博客更新</a>
+        <code>/files/blog/[string]path=atom.xml</code>
+      </li>
     </ul>
-    <p>0.3.3 by Space Time</p>
+    <p>0.3.4 by Space Time</p>
   </main>
 </template>
 
