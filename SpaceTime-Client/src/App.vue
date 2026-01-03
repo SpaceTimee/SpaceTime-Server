@@ -25,7 +25,7 @@
         <code>/files/blog/[string]path=atom.xml</code>
       </li>
     </ul>
-    <p>0.3.4 by Space Time</p>
+    <p>0.3.5 by Space Time</p>
   </main>
 </template>
 
