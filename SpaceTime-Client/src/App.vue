@@ -13,19 +13,23 @@
       </li>
       <li><a href="/api/host/check">测试内置规则</a> <code>/api/host/check</code></li>
       <li>
+        <a href="/api/prox/forward/">透传代理请求</a>
+        <code>/api/prox/forward/[string]?[any]</code>
+      </li>
+      <li>
         <a href="/files/host/Cealing-Host.json">订阅内置规则</a>
-        <code>/files/host/[string]path=Cealing-Host.json</code>
+        <code>/files/host/[string]=Cealing-Host.json</code>
       </li>
       <li>
         <a href="/files/gallery/SpaceTime-Server-0.2.0.mp4">下载宣传物料</a>
-        <code>/files/gallery/[string]path=SpaceTime-Server-0.2.0.mp4</code>
+        <code>/files/gallery/[string]=SpaceTime-Server-0.2.0.mp4</code>
       </li>
       <li>
         <a href="/files/blog/atom.xml">订阅博客更新</a>
-        <code>/files/blog/[string]path=atom.xml</code>
+        <code>/files/blog/[string]=atom.xml</code>
       </li>
     </ul>
-    <p>0.3.6 by Space Time</p>
+    <p>0.3.7 by Space Time</p>
   </main>
 </template>
 
