@@ -27,7 +27,6 @@ builder.AddServiceDefaults().
     Services.AddResponseCaching().
     AddResponseCompression(static options => options.EnableForHttps = true).
     AddRequestTimeouts(static options => options.DefaultPolicy = new() { Timeout = TimeSpan.FromMinutes(10) }).
-    AddDirectoryBrowser().
     AddOpenApi(options => options.AddDocumentTransformer((document, _, _) =>
     {
         document.Info.Title = "SpaceTime Server";

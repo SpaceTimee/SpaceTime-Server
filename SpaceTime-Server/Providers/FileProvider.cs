@@ -20,11 +20,11 @@ internal class FileProvider(IAmazonS3 client, string bucketName) : IFileProvider
         List<IFileInfo> itemList = new((response.CommonPrefixes?.Count ?? 0) + (response.S3Objects?.Count ?? 0));
 
         foreach (string directory in response.CommonPrefixes ?? [])
-            itemList.Add(new FileInfo(Path.GetFileName(directory.TrimEnd('/')), true, DateTimeOffset.MinValue, 0));
+            itemList.Add(new FileInfo(Path.GetFileName(directory.AsSpan().TrimEnd('/')).ToString(), true, DateTimeOffset.MinValue, 0));
 
         foreach (S3Object @object in response.S3Objects ?? [])
         {
-            if (@object.Key.TrimEnd('/') == subpath)
+            if (@object.Key.AsSpan().TrimEnd('/') == subpath)
                 continue;
 
             itemList.Add(new FileInfo(Path.GetFileName(@object.Key), false, @object.LastModified ?? DateTime.MinValue, @object.Size ?? 0));
@@ -47,7 +47,7 @@ internal class FileProvider(IAmazonS3 client, string bucketName) : IFileProvider
         {
             ListObjectsV2Response response = await client.ListObjectsV2Async(new ListObjectsV2Request { BucketName = bucketName, Prefix = $"{subpath}/", MaxKeys = 1 });
 
-            return (response.S3Objects?.Count ?? 0) != 0 || (response.CommonPrefixes?.Count ?? 0) != 0 ?
+            return response.S3Objects?.Count > 0 || response.CommonPrefixes?.Count > 0 ?
                 new FileInfo(Path.GetFileName(subpath), true, DateTimeOffset.MinValue, 0) : new NotFoundFileInfo(Path.GetFileName(subpath));
         }
     }

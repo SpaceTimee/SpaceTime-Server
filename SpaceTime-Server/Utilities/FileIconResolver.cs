@@ -15,7 +15,7 @@ internal static class FileIconResolver
 
         _ when mime.StartsWith("audio/", StringComparison.Ordinal) => "icon-audio",
 
-        _ when mime is "application/zip" or "application/gzip"
+        "application/zip" or "application/gzip"
             or "application/x-tar" or "application/x-bzip" or "application/x-bzip2" or "application/x-xz"
             or "application/x-7z-compressed" or "application/vnd.rar"
             or "application/java-archive" or "application/vnd.android.package-archive"
@@ -23,7 +23,7 @@ internal static class FileIconResolver
             or "application/appx" or "application/msix"
             or "application/x-debian-package" or "application/x-freearc" => "icon-archive",
 
-        _ when mime is "text/html" or "text/css"
+        "text/html" or "text/css"
             or "text/javascript" or "text/jsx" or "text/coffeescript" or "text/x-java-source" or "text/x-asm" or "text/yaml"
             or "application/javascript" or "application/ecmascript"
             or "application/json" or "application/ld+json" or "application/xml" or "application/toml"

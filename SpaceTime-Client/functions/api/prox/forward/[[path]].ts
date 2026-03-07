@@ -1,24 +1,23 @@
-export const onRequest = async (context: EventContext<Env, 'path', unknown>) => {
-  const url = new URL(context.request.url)
-  const pathSegments = context.params.path as string[] | undefined
-  const targetPath = pathSegments?.join('/') || ''
-  const targetUrl = `${context.env.PROX_URL.replace(/\/$/, '')}/${targetPath}${url.search}`
+export const onRequest = async ({ request, env, params }: EventContext<Env, 'path', unknown>) => {
+  const targetPath = (params.path as string[] | undefined)?.join('/') || ''
+  const targetUrl = `${env.PROX_URL.replace(/\/$/, '')}/${targetPath}${new URL(request.url).search}`
 
-  const headers = new Headers(context.request.headers)
+  const headers = new Headers(request.headers)
   headers.delete('host')
 
   try {
-    const response = await fetch(targetUrl, {
-      method: context.request.method,
+    const {
+      status,
+      statusText,
+      headers: responseHeaders,
+      body
+    } = await fetch(targetUrl, {
+      method: request.method,
       headers,
-      body: context.request.body
+      body: request.body
     })
 
-    return new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers
-    })
+    return new Response(body, { status, statusText, headers: responseHeaders })
   } catch {
     return new Response('Fetch Error', {
       status: 502,

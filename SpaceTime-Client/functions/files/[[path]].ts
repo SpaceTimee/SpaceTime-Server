@@ -1,7 +1,7 @@
 export const onRequest = async (context: EventContext<Env, 'path', { targetUrl?: string }>) => {
   if (!context.data?.targetUrl && !context.params.path?.length) return context.next()
 
-  const cacheKey = new Request(context.request.url)
+  const cacheKey = context.request.url
   const cache = (caches as unknown as { default: Cache }).default
 
   let response = await cache.match(cacheKey)

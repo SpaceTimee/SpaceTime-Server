@@ -29,7 +29,7 @@
         <code>/files/blog/[string]=atom.xml</code>
       </li>
     </ul>
-    <p>0.3.7 by Space Time</p>
+    <p>0.3.8 by Space Time</p>
   </main>
 </template>
 
