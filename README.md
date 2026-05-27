@@ -15,6 +15,10 @@
 1. Docker Hub (首选): [spacetimee/spacetime-server](https://hub.docker.com/r/spacetimee/spacetime-server)
 2. GitHub Container Registry: [ghcr.io/spacetimee/spacetime-server](https://github.com/spacetimee/SpaceTime-Server/pkgs/container/spacetime-server)
 
+# MCP 托管
+1. Smithery (首选): [https://smithery.ai/servers/spacetime/spacetime-server](https://smithery.ai/servers/spacetime/spacetime-server)
+2. Glama: [https://glama.ai/mcp/connectors/xyz.spacetimee.server/space-time-server](https://glama.ai/mcp/connectors/xyz.spacetimee.server/space-time-server)
+
 ## 开发者
 **Space Time**
 
