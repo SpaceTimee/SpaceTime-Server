@@ -5,31 +5,38 @@
     <ul>
       <li>
         <a href="/api/host/generate?domain=wikipedia.org">生成伪造规则</a>
-        <code>/api/host/generate?[string]domain=wikipedia.org</code>
+        <code>/api/host/generate?[string]domain=wikipedia.org (GET)</code>
       </li>
       <li>
         <a href="/api/host/search?domain=wikipedia.org">搜索内置规则</a>
-        <code>/api/host/search?[string]domain=wikipedia.org</code>
+        <code>/api/host/search?[string]domain=wikipedia.org (GET)</code>
       </li>
-      <li><a href="/api/host/check">测试内置规则</a> <code>/api/host/check</code></li>
+      <li>
+        <a href="/api/host/check">测试内置规则</a>
+        <code>/api/host/check (GET)</code>
+      </li>
       <li>
         <a href="/api/prox/forward/">透传代理请求</a>
-        <code>/api/prox/forward/[string]?[any]</code>
+        <code>/api/prox/forward/[string]?[any] (ANY)</code>
       </li>
       <li>
         <a href="/files/host/Cealing-Host.json">订阅内置规则</a>
-        <code>/files/host/[string]=Cealing-Host.json</code>
+        <code>/files/host/[string]=Cealing-Host.json (GET)</code>
       </li>
       <li>
         <a href="/files/gallery/SpaceTime-Server-0.2.0.mp4">下载宣传物料</a>
-        <code>/files/gallery/[string]=SpaceTime-Server-0.2.0.mp4</code>
+        <code>/files/gallery/[string]=SpaceTime-Server-0.2.0.mp4 (GET)</code>
       </li>
       <li>
         <a href="/files/blog/atom.xml">订阅博客更新</a>
-        <code>/files/blog/[string]=atom.xml</code>
+        <code>/files/blog/[string]=atom.xml (GET)</code>
+      </li>
+      <li>
+        <a href="/mcp">连接 MCP 服务</a>
+        <code>/mcp (POST)</code>
       </li>
     </ul>
-    <p>0.3.8 by Space Time</p>
+    <p>0.3.9 by Space Time</p>
   </main>
 </template>
 
