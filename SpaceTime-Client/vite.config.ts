@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import plugin from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
 import Sitemap from 'vite-plugin-sitemap'
+import { AtomFeed } from './plugins/atom-feed'
 
 export default defineConfig({
   plugins: [
@@ -30,6 +31,12 @@ export default defineConfig({
     }),
     Sitemap({
       hostname: 'https://server.spacetimee.xyz'
+    }),
+    AtomFeed({
+      title: 'SpaceTime Server',
+      description: 'Welcome To My Server ~',
+      author: 'Space Time',
+      siteUrl: 'https://server.spacetimee.xyz'
     })
   ],
   css: {

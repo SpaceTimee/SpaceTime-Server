@@ -1,46 +1,18 @@
+<script setup lang="ts">
+import { endpoints } from '@/endpoints'
+</script>
+
 <template>
   <main>
     <h1>SpaceTime Server</h1>
     <p>绝赞建设中，可用功能：</p>
     <ul>
-      <li>
-        <a href="/api/host/generate?domain=wikipedia.org">生成伪造规则</a>
-        <code>/api/host/generate?[string]domain=wikipedia.org (GET)</code>
-      </li>
-      <li>
-        <a href="/api/host/search?domain=wikipedia.org">搜索内置规则</a>
-        <code>/api/host/search?[string]domain=wikipedia.org (GET)</code>
-      </li>
-      <li>
-        <a href="/api/host/check">测试内置规则</a>
-        <code>/api/host/check (GET)</code>
-      </li>
-      <li>
-        <a href="/api/prox/forward/">透传代理请求</a>
-        <code>/api/prox/forward/[string]?[any] (ANY)</code>
-      </li>
-      <li>
-        <a href="/files/host/Cealing-Host.json">订阅内置规则</a>
-        <code>/files/host/[string]=Cealing-Host.json (GET)</code>
-      </li>
-      <li>
-        <a href="/files/gallery/SpaceTime-Server-0.2.0.mp4">下载宣传物料</a>
-        <code>/files/gallery/[string]=SpaceTime-Server-0.2.0.mp4 (GET)</code>
-      </li>
-      <li>
-        <a href="/files/center/atom.xml">订阅主页更新</a>
-        <code>/files/center/[string]=atom.xml (GET)</code>
-      </li>
-      <li>
-        <a href="/files/blog/atom.xml">订阅博客更新</a>
-        <code>/files/blog/[string]=atom.xml (GET)</code>
-      </li>
-      <li>
-        <a href="/mcp">连接 MCP 服务</a>
-        <code>/mcp (POST)</code>
+      <li v-for="endpoint in endpoints" :key="endpoint.name">
+        <a :href="endpoint.href">{{ endpoint.name }}</a>
+        <code>{{ endpoint.method }} {{ endpoint.path }}</code>
       </li>
     </ul>
-    <p>0.3.10 by Space Time</p>
+    <p>0.4.0 by Space Time</p>
   </main>
 </template>
 
