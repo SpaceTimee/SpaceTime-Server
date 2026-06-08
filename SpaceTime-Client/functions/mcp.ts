@@ -1,5 +1,5 @@
 const protocolVersion = '2025-03-26'
-const serverInfo = { name: 'SpaceTime Server', version: '0.3.9' }
+const serverInfo = { name: 'SpaceTime Server', version: '0.3.10' }
 const toolsInfo = [
   {
     name: 'generate_host',
@@ -61,7 +61,7 @@ const toolsInfo = [
       properties: {
         path: {
           type: 'string',
-          description: 'File path (e.g. host/Cealing-Host.json, blog/atom.xml)'
+          description: 'File path (e.g. host/Cealing-Host.json, center/atom.xml, blog/atom.xml)'
         }
       },
       required: ['path']

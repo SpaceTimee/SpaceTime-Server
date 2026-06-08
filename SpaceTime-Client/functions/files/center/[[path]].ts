@@ -7,10 +7,10 @@ export const onRequest = async (context: EventContext<Env, 'path', unknown>) => 
     ...context,
     params: {
       ...context.params,
-      path: ['blog', ...(pathSegments || [])]
+      path: ['center', ...(pathSegments || [])]
     },
     data: {
-      targetUrl: `${context.env.BLOG_URL || 'http://localhost'}/${pathSegments?.join('/') || 'atom.xml'}`
+      targetUrl: `${context.env.CENTER_URL || 'http://localhost'}/${pathSegments?.join('/') || 'atom.xml'}`
     }
   })
 }

@@ -28,6 +28,10 @@
         <code>/files/gallery/[string]=SpaceTime-Server-0.2.0.mp4 (GET)</code>
       </li>
       <li>
+        <a href="/files/center/atom.xml">订阅主页更新</a>
+        <code>/files/center/[string]=atom.xml (GET)</code>
+      </li>
+      <li>
         <a href="/files/blog/atom.xml">订阅博客更新</a>
         <code>/files/blog/[string]=atom.xml (GET)</code>
       </li>
@@ -36,7 +40,7 @@
         <code>/mcp (POST)</code>
       </li>
     </ul>
-    <p>0.3.9 by Space Time</p>
+    <p>0.3.10 by Space Time</p>
   </main>
 </template>
 
