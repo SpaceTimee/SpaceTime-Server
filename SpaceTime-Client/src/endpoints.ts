@@ -50,16 +50,22 @@ export const endpoints = [
     href: '/files/blog/atom.xml'
   },
   {
+    name: '订阅端点更新',
+    method: 'GET',
+    path: '/files/server/[string]=atom.xml or /atom.xml',
+    href: '/atom.xml'
+  },
+  {
     name: '订阅文档更新',
     method: 'GET',
     path: '/files/docs/[string]=atom.xml',
     href: '/files/docs/atom.xml'
   },
   {
-    name: '订阅端点更新',
+    name: '订阅服务状态',
     method: 'GET',
-    path: '/files/server/[string]=atom.xml or /atom.xml',
-    href: '/atom.xml'
+    path: '/files/status/[string]=feed.rss',
+    href: '/files/status/feed.rss'
   },
   {
     name: '连接 MCP 服务',
