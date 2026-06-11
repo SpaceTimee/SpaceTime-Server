@@ -1,5 +1,5 @@
 const protocolVersion = '2025-03-26'
-const serverInfo = { name: 'SpaceTime Server', version: '0.4.1' }
+const serverInfo = { name: 'SpaceTime Server', version: '0.4.2' }
 const toolsInfo = [
   {
     name: 'generate_host',

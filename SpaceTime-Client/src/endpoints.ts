@@ -26,6 +26,12 @@ export const endpoints = [
     href: '/api/prox/forward/'
   },
   {
+    name: 'AI 对话补全',
+    method: 'POST',
+    path: '/api/ai/chat',
+    href: '/api/ai/chat'
+  },
+  {
     name: '订阅内置规则',
     method: 'GET',
     path: '/files/host/[string]=Cealing-Host.json',

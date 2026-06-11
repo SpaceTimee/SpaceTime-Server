@@ -7,4 +7,7 @@ interface Env {
   DOCS_URL: string
   STATUS_URL: string
   PROX_URL: string
+  GATEWAY_URL: string
+  GATEWAY_KEY: string
+  GATEWAY_MODEL: string
 }
