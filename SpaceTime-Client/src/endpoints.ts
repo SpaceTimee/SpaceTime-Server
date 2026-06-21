@@ -26,10 +26,28 @@ export const endpoints = [
     href: '/api/prox/forward/'
   },
   {
-    name: 'AI 对话补全',
+    name: '补全 AI 对话',
     method: 'POST',
-    path: '/api/ai/chat',
-    href: '/api/ai/chat'
+    path: '/api/gateway/chat',
+    href: '/api/gateway/chat'
+  },
+  {
+    name: '列出 AI 模型',
+    method: 'GET',
+    path: '/api/gateway/models',
+    href: '/api/gateway/models'
+  },
+  {
+    name: '补全 AI 对话 (赞助)',
+    method: 'POST',
+    path: '/api/router/chat',
+    href: '/api/router/chat'
+  },
+  {
+    name: '列出 AI 模型 (赞助)',
+    method: 'GET',
+    path: '/api/router/models',
+    href: '/api/router/models'
   },
   {
     name: '订阅内置规则',

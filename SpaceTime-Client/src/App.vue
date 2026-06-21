@@ -12,7 +12,7 @@ import { endpoints } from '@/endpoints'
         <code>{{ endpoint.method }} {{ endpoint.path }}</code>
       </li>
     </ul>
-    <p>0.4.2 by Space Time</p>
+    <p>0.4.3 by Space Time</p>
   </main>
 </template>
 

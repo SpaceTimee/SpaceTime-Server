@@ -1,5 +1,5 @@
 const protocolVersion = '2025-03-26'
-const serverInfo = { name: 'SpaceTime Server', version: '0.4.2' }
+const serverInfo = { name: 'SpaceTime Server', version: '0.4.3' }
 const toolsInfo = [
   {
     name: 'generate_host',
@@ -190,8 +190,7 @@ const callTool = async (name: string, args: Record<string, unknown>, origin: str
   }
 }
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } })
+const json = (body: unknown, status = 200) => Response.json(body, { status })
 const error = (id: unknown, code: number, message: string) => ({
   jsonrpc: '2.0',
   id,

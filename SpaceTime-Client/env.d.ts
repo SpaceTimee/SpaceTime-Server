@@ -10,4 +10,5 @@ interface Env {
   GATEWAY_URL: string
   GATEWAY_KEY: string
   GATEWAY_MODEL: string
+  ROUTER_URL: string
 }

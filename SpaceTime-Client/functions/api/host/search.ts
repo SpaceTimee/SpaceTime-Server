@@ -20,10 +20,7 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
 
       context.waitUntil(cache.put(cacheKey, response.clone()))
     } catch {
-      return new Response(JSON.stringify({ error: 'Fetch Error', message: 'Unable to fetch data' }), {
-        status: 502,
-        headers: { 'Content-Type': 'application/json; charset=utf-8' }
-      })
+      return Response.json({ error: 'Fetch Error', message: 'Unable to fetch data' }, { status: 502 })
     }
   }
 
@@ -38,15 +35,10 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
 
     if (!match) throw new Error()
   } catch {
-    return new Response(JSON.stringify({ error: 'Not Found', message: 'Domain not found in database' }), {
-      status: 404,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' }
-    })
+    return Response.json({ error: 'Not Found', message: 'Domain not found in database' }, { status: 404 })
   }
 
-  return new Response(JSON.stringify(match), {
-    headers: { 'Content-Type': 'application/json; charset=utf-8' }
-  })
+  return Response.json(match)
 }
 
 const glob = (pattern: string, text: string) => {

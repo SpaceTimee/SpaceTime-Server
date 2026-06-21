@@ -17,13 +17,8 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
 
     result = dnsAnswers[dnsAnswers.length - 1].data
   } catch {
-    return new Response(JSON.stringify({ error: 'Generation Failed', message: 'Unable to resolve domain' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' }
-    })
+    return Response.json({ error: 'Generation Failed', message: 'Unable to resolve domain' }, { status: 500 })
   }
 
-  return new Response(JSON.stringify([[`*${domain}`], '', result]), {
-    headers: { 'Content-Type': 'application/json; charset=utf-8' }
-  })
+  return Response.json([[`*${domain}`], '', result])
 }

@@ -6,18 +6,11 @@ export const onRequest = async ({ request, env, params }: EventContext<Env, 'pat
   headers.delete('host')
 
   try {
-    const {
-      status,
-      statusText,
-      headers: responseHeaders,
-      body
-    } = await fetch(targetUrl, {
+    return await fetch(targetUrl, {
       method: request.method,
       headers,
       body: request.body
     })
-
-    return new Response(body, { status, statusText, headers: responseHeaders })
   } catch {
     return new Response('Fetch Error', {
       status: 502,

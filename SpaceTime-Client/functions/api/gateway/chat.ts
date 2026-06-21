@@ -1,9 +1,6 @@
 export const onRequest = async ({ request, env }: EventContext<Env, string, unknown>) => {
   if (request.method !== 'POST')
-    return new Response(JSON.stringify({ error: 'Method Not Allowed', message: 'Use POST' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' }
-    })
+    return Response.json({ error: 'Method Not Allowed', message: 'Use POST' }, { status: 405 })
 
   let messages: { role: string; content: string }[]
 
@@ -14,10 +11,7 @@ export const onRequest = async ({ request, env }: EventContext<Env, string, unkn
 
     messages = body.messages
   } catch {
-    return new Response(JSON.stringify({ error: 'Bad Request', message: 'Invalid or missing messages' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' }
-    })
+    return Response.json({ error: 'Bad Request', message: 'Invalid or missing messages' }, { status: 400 })
   }
 
   try {
@@ -37,13 +31,8 @@ export const onRequest = async ({ request, env }: EventContext<Env, string, unkn
 
     if (!content) throw new Error()
 
-    return new Response(JSON.stringify({ content }), {
-      headers: { 'Content-Type': 'application/json; charset=utf-8' }
-    })
+    return Response.json({ content })
   } catch {
-    return new Response(JSON.stringify({ error: 'Gateway Error', message: 'Unable to complete chat' }), {
-      status: 502,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' }
-    })
+    return Response.json({ error: 'Gateway Error', message: 'Unable to complete chat' }, { status: 502 })
   }
 }
