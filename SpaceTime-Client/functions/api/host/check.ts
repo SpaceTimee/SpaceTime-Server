@@ -3,29 +3,28 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
   const cacheKey = new Request(targetUrl)
   const cache = (caches as unknown as { default: Cache }).default
 
-  let response = await cache.match(cacheKey)
+  const response = await cache.match(cacheKey)
+  if (response) return response
 
-  if (!response) {
-    try {
-      response = await fetch(targetUrl)
+  try {
+    const freshResponse = await fetch(targetUrl)
 
-      if (!response.ok) throw new Error()
+    if (!freshResponse.ok) throw new Error()
 
-      response = new Response(response.body, {
-        headers: {
-          'Cache-Control': 'public, max-age=600',
-          'Content-Type': 'text/plain; charset=utf-8'
-        }
-      })
+    const cached = new Response(freshResponse.body, {
+      headers: {
+        'Cache-Control': 'public, max-age=600',
+        'Content-Type': 'text/plain; charset=utf-8'
+      }
+    })
 
-      context.waitUntil(cache.put(cacheKey, response.clone()))
-    } catch {
-      return new Response('Fetch Error', {
-        status: 502,
-        headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-      })
-    }
+    context.waitUntil(cache.put(cacheKey, cached.clone()))
+
+    return cached
+  } catch {
+    return new Response('Fetch Error', {
+      status: 502,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    })
   }
-
-  return response
 }

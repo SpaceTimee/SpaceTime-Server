@@ -10,6 +10,9 @@ export default defineConfig({
     plugin(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        navigateFallbackAllowlist: [/^\/$/]
+      },
       manifest: {
         name: 'SpaceTime Server',
         short_name: 'SpaceTime Server',

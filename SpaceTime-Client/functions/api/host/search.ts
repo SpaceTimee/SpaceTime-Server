@@ -24,27 +24,25 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
     }
   }
 
-  let match: [string[], string, string] | undefined
-
   try {
-    const data: [string[], string, string][] = await response.json()
+    const data = await response.json<[string[], string, string][]>()
 
-    match = data.find(
+    const match = data.find(
       ([domains]) => Array.isArray(domains) && domains.some((pattern) => glob(pattern, domain))
     )
 
     if (!match) throw new Error()
+
+    return Response.json(match)
   } catch {
     return Response.json({ error: 'Not Found', message: 'Domain not found in database' }, { status: 404 })
   }
-
-  return Response.json(match)
 }
 
 const glob = (pattern: string, text: string) => {
   if (pattern.startsWith('^')) return false
 
-  const [includePattern, excludePattern] = pattern.replace(/^([#$])/, '').split('^')
+  const [includePattern, excludePattern] = pattern.replace(/^[#$]/, '').split('^')
   const createRegExp = (segment: string) =>
     new RegExp(`^${segment.replace(/[.+^${}()|[\]\\?]/g, '\\$&').replace(/\*/g, '.*')}$`, 'i')
 

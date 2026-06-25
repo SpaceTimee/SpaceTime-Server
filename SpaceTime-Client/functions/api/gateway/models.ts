@@ -4,7 +4,6 @@ export const onRequest = async ({ request, env }: EventContext<Env, string, unkn
 
   try {
     const response = await fetch(`${env.GATEWAY_URL}/models`, {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${env.GATEWAY_KEY}`
       }

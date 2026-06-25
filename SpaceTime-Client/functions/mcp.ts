@@ -1,5 +1,5 @@
 const protocolVersion = '2025-03-26'
-const serverInfo = { name: 'SpaceTime Server', version: '0.4.3' }
+const serverInfo = { name: 'SpaceTime Server', version: '0.5.0' }
 const toolsInfo = [
   {
     name: 'generate_host',
@@ -140,7 +140,7 @@ export const onRequest = async ({ request }: EventContext<Env, string, unknown>)
           }
 
           default:
-            return error(id, -32601, `Method Not Found: Unknown method ${method}`)
+            return error(id, -32601, `Method Not Found: Unknown method '${method}'`)
         }
       })
     )

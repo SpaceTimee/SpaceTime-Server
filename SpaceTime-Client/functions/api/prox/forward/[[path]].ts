@@ -1,12 +1,11 @@
 export const onRequest = async ({ request, env, params }: EventContext<Env, 'path', unknown>) => {
   const targetPath = (params.path as string[] | undefined)?.join('/') || ''
-  const targetUrl = `${env.PROX_URL.replace(/\/$/, '')}/${targetPath}${new URL(request.url).search}`
 
   const headers = new Headers(request.headers)
   headers.delete('host')
 
   try {
-    return await fetch(targetUrl, {
+    return await fetch(`${env.PROX_URL.replace(/\/$/, '')}/${targetPath}${new URL(request.url).search}`, {
       method: request.method,
       headers,
       body: request.body

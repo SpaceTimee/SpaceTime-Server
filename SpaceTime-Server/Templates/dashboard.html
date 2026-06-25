@@ -12,11 +12,10 @@
       --color-muted: #757575;
     }
 
-    body,
-    html {
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      height: 100vh;
       overflow: hidden;
       font-family: system-ui, -apple-system, sans-serif;
     }
@@ -116,7 +115,7 @@
 
     .icon {
       display: inline-block;
-      background-color: currentColor;
+      background: currentColor;
       -webkit-mask: var(--icon-url) no-repeat center / contain;
       mask: var(--icon-url) no-repeat center / contain;
     }

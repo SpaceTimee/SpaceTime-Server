@@ -4,21 +4,17 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
     .trim()
     .replace(/\/$/, '')
 
-  let result: string
-
   try {
     const response = await fetch(`https://dns.google/resolve?name=${domain}`)
 
     if (!response.ok) throw new Error()
 
-    const { Answer: dnsAnswers } = (await response.json()) as { Answer?: { data: string }[] }
+    const { Answer: dnsAnswers } = await response.json<{ Answer?: { data: string }[] }>()
 
     if (!dnsAnswers?.length) throw new Error()
 
-    result = dnsAnswers[dnsAnswers.length - 1].data
+    return Response.json([[`*${domain}`], '', dnsAnswers[dnsAnswers.length - 1].data])
   } catch {
-    return Response.json({ error: 'Generation Failed', message: 'Unable to resolve domain' }, { status: 500 })
+    return Response.json({ error: 'Generation Error', message: 'Unable to resolve domain' }, { status: 500 })
   }
-
-  return Response.json([[`*${domain}`], '', result])
 }
