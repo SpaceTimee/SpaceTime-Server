@@ -1,5 +1,5 @@
 const protocolVersion = '2025-03-26'
-const serverInfo = { name: 'SpaceTime Server', version: '0.5.0' }
+const serverInfo = { name: 'SpaceTime Server', version: '0.6.0' }
 const toolsInfo = [
   {
     name: 'generate_host',
@@ -156,22 +156,22 @@ const callTool = async (name: string, args: Record<string, unknown>, origin: str
     case 'generate_host':
     case 'search_host': {
       const action = name === 'generate_host' ? 'generate' : 'search'
-      return await (
-        await fetch(
-          `${origin}/api/host/${action}?domain=${encodeURIComponent(String(args.domain ?? 'wikipedia.org'))}`
-        )
-      ).text()
+      const response = await fetch(
+        `${origin}/api/host/${action}?domain=${encodeURIComponent(String(args.domain ?? 'wikipedia.org'))}`
+      )
+
+      return response.text()
     }
     case 'check_host':
-      return await (await fetch(`${origin}/api/host/check`)).text()
+      return (await fetch(`${origin}/api/host/check`)).text()
     case 'forward_proxy': {
       const method = String(args.method ?? 'GET').toUpperCase()
-      return await (
-        await fetch(`${origin}/api/prox/forward/${String(args.url ?? '')}`, {
-          method,
-          body: method !== 'GET' && method !== 'HEAD' ? (args.body as string | undefined) : undefined
-        })
-      ).text()
+      const response = await fetch(`${origin}/api/prox/forward/${String(args.url ?? '')}`, {
+        method,
+        body: method !== 'GET' && method !== 'HEAD' ? (args.body as string | undefined) : undefined
+      })
+
+      return response.text()
     }
     case 'get_file': {
       const path = String(args.path ?? '')

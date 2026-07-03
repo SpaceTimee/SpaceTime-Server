@@ -42,13 +42,6 @@ export default defineConfig({
       siteUrl: 'https://server.spacetimee.xyz'
     })
   ],
-  css: {
-    preprocessorOptions: {
-      less: {
-        additionalData: "@import url('./src/assets/global');"
-      }
-    }
-  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

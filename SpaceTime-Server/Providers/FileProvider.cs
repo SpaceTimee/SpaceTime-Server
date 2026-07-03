@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using FileInfo = SpaceTime_Server.Models.FileInfo;
 
@@ -14,9 +15,9 @@ namespace SpaceTime_Server.Providers;
 
 internal class FileProvider(IAmazonS3 client, string bucketName) : IFileProvider
 {
-    internal async Task<IDirectoryContents> GetDirectoryContentsAsync(string subpath)
+    internal async Task<IDirectoryContents> GetDirectoryContentsAsync(string subpath, CancellationToken cancellationToken = default)
     {
-        ListObjectsV2Response response = await client.ListObjectsV2Async(new ListObjectsV2Request { BucketName = bucketName, Prefix = string.IsNullOrEmpty(subpath) ? subpath : $"{subpath}/", Delimiter = "/" });
+        ListObjectsV2Response response = await client.ListObjectsV2Async(new ListObjectsV2Request { BucketName = bucketName, Prefix = string.IsNullOrEmpty(subpath) ? subpath : $"{subpath}/", Delimiter = "/" }, cancellationToken);
         List<IFileInfo> itemList = new((response.CommonPrefixes?.Count ?? 0) + (response.S3Objects?.Count ?? 0));
 
         foreach (string directory in response.CommonPrefixes ?? [])
@@ -35,17 +36,17 @@ internal class FileProvider(IAmazonS3 client, string bucketName) : IFileProvider
 
     public IDirectoryContents GetDirectoryContents(string subpath) => GetDirectoryContentsAsync(subpath).GetAwaiter().GetResult();
 
-    internal async Task<IFileInfo> GetFileInfoAsync(string subpath)
+    internal async Task<IFileInfo> GetFileInfoAsync(string subpath, CancellationToken cancellationToken = default)
     {
         try
         {
-            GetObjectMetadataResponse response = await client.GetObjectMetadataAsync(new GetObjectMetadataRequest { BucketName = bucketName, Key = subpath });
+            GetObjectMetadataResponse response = await client.GetObjectMetadataAsync(new GetObjectMetadataRequest { BucketName = bucketName, Key = subpath }, cancellationToken);
 
             return new FileInfo(Path.GetFileName(subpath), false, response.LastModified ?? DateTime.MinValue, response.ContentLength);
         }
         catch (AmazonS3Exception ex) when (ex.StatusCode == HttpStatusCode.NotFound)
         {
-            ListObjectsV2Response response = await client.ListObjectsV2Async(new ListObjectsV2Request { BucketName = bucketName, Prefix = $"{subpath}/", MaxKeys = 1 });
+            ListObjectsV2Response response = await client.ListObjectsV2Async(new ListObjectsV2Request { BucketName = bucketName, Prefix = $"{subpath}/", MaxKeys = 1 }, cancellationToken);
 
             return response.S3Objects?.Count > 0 || response.CommonPrefixes?.Count > 0 ?
                 new FileInfo(Path.GetFileName(subpath), true, DateTimeOffset.MinValue, 0) : new NotFoundFileInfo(Path.GetFileName(subpath));

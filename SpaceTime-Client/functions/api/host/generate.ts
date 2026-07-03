@@ -5,7 +5,7 @@ export const onRequest = async (context: EventContext<unknown, string, unknown>)
     .replace(/\/$/, '')
 
   try {
-    const response = await fetch(`https://dns.google/resolve?name=${domain}`)
+    const response = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}`)
 
     if (!response.ok) throw new Error()
 

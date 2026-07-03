@@ -7,7 +7,7 @@ export const onRequest = async (context: EventContext<Env, 'path', unknown>) => 
     ...context,
     params: {
       ...context.params,
-      path: ['center', ...(pathSegments || [])]
+      path: ['center', ...(pathSegments ?? [])]
     },
     data: {
       targetUrl: `${context.env.CENTER_URL || 'http://localhost'}/${pathSegments?.join('/') || 'atom.xml'}`

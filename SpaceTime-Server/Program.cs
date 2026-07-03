@@ -11,11 +11,13 @@ using SpaceTime_Server.Models;
 using SpaceTime_Server.Providers;
 using SpaceTime_Server.Utilities;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using FileInfo = SpaceTime_Server.Models.FileInfo;
 
@@ -27,14 +29,14 @@ builder.AddServiceDefaults().
     Services.AddResponseCaching().
     AddResponseCompression(static options => options.EnableForHttps = true).
     AddRequestTimeouts(static options => options.DefaultPolicy = new() { Timeout = TimeSpan.FromMinutes(10) }).
-    AddOpenApi(options => options.AddDocumentTransformer((document, _, _) =>
+    AddOpenApi(static options => options.AddDocumentTransformer(static (document, _, _) =>
     {
         document.Info.Title = "SpaceTime Server";
         document.Info.Version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
         return Task.CompletedTask;
     })).
-    AddSingleton<IAmazonS3>(provider =>
+    AddSingleton<IAmazonS3>(static provider =>
     {
         StorageOptions options = provider.GetRequiredService<IOptions<StorageOptions>>().Value;
 
@@ -56,20 +58,20 @@ app.UseHttpsRedirection().
         RequestPath = "/icons"
     });
 
-app.MapGet("/files/{*path}", async (string? path, IAmazonS3 client, IOptions<StorageOptions> options) =>
+app.MapGet("/files/{*path}", async (string? path, IAmazonS3 client, IOptions<StorageOptions> options, CancellationToken cancellationToken) =>
 {
     path = path?.Trim('/', ' ') ?? string.Empty;
 
     FileProvider provider = new(client, options.Value.BucketName);
 
-    return !string.IsNullOrEmpty(path) && await provider.GetFileInfoAsync(path) is FileInfo file && file.Exists && !file.IsDirectory ?
+    return !string.IsNullOrEmpty(path) && await provider.GetFileInfoAsync(path, cancellationToken) is FileInfo file && file.Exists && !file.IsDirectory ?
         Results.Redirect($"{options.Value.PublicDomain}/{path}") :
-        Results.Content(new StringBuilder(await File.ReadAllTextAsync(Path.Combine(contentRootPath, "Templates", "files.html"))).
+        Results.Content(new StringBuilder(await File.ReadAllTextAsync(Path.Combine(contentRootPath, "Templates", "files.html"), cancellationToken)).
         Replace("{{TITLE}}", $"Index of /{path}").
         Replace("{{PATH}}", $"/{path}").
-        Replace("{{PARENT_LINK}}", string.IsNullOrEmpty(path) ? "#" : $"/files/{Path.GetDirectoryName(path)?.Replace('\\', '/')}").
+        Replace("{{PARENT_ATTRIBUTES}}", string.IsNullOrEmpty(path) ? "aria-disabled=\"true\"" : $"href=\"/files/{Path.GetDirectoryName(path)?.Replace('\\', '/') ?? string.Empty}\"").
         Replace("{{PARENT_DISABLED}}", string.IsNullOrEmpty(path) ? "disabled" : string.Empty).
-        Replace("{{FILES_JSON}}", JsonSerializer.Serialize((await provider.GetDirectoryContentsAsync(path)).Select(file =>
+        Replace("{{FILES_JSON}}", JsonSerializer.Serialize((await provider.GetDirectoryContentsAsync(path, cancellationToken)).Select(file =>
         {
             bool isDir = file.IsDirectory;
 
@@ -80,7 +82,7 @@ app.MapGet("/files/{*path}", async (string? path, IAmazonS3 client, IOptions<Sto
                 isDir,
                 icon = FileIconResolver.Resolve(isDir ? string.Empty : MimeUtility.GetMimeMapping(file.Name)),
                 size = isDir ? "-" : FileSizeFormatter.Format(file.Length),
-                date = isDir ? "-" : file.LastModified.ToString("yyyy-MM-dd HH:mm:ss")
+                date = isDir ? "-" : file.LastModified.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
             };
         }))).ToString(), "text/html");
 }).

@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace SpaceTime_Server.Utilities;
 
 internal static class FileSizeFormatter
@@ -14,6 +16,6 @@ internal static class FileSizeFormatter
             unitIndex++;
         }
 
-        return $"{size:0.##} {UnitArray[unitIndex]}";
+        return string.Create(CultureInfo.InvariantCulture, $"{size:0.##} {UnitArray[unitIndex]}");
     }
 }

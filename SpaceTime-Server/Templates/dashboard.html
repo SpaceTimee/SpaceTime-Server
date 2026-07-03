@@ -14,8 +14,8 @@
 
     body {
       margin: 0;
-      padding: 0;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       font-family: system-ui, -apple-system, sans-serif;
     }
@@ -125,15 +125,15 @@
 <body>
   <iframe id="api-frame" src="/api/" title="API Reference"></iframe>
 
-  <div id="file-browser" class="collapsed" role="complementary" aria-label="File Browser">
-    <button id="collapse-btn" title="Collapse" aria-label="Collapse file browser">
-      <div class="icon" style="width: 24px; height: 24px; --icon-url: url('/icons/minimize.svg');"></div>
+  <aside id="file-browser" class="collapsed" aria-label="File Browser" aria-hidden="true" inert>
+    <button id="collapse-btn" type="button" title="Collapse" aria-label="Collapse file browser" aria-controls="file-browser">
+      <span class="icon" style="width: 24px; height: 24px; --icon-url: url('/icons/minimize.svg');" aria-hidden="true"></span>
     </button>
     <iframe id="file-frame" src="/files/" title="File List"></iframe>
-  </div>
+  </aside>
 
-  <button id="expand-btn" class="active" aria-label="Expand file browser">
-    <div class="icon" style="width: 18px; height: 18px; --icon-url: url('/icons/folder.svg');"></div>
+  <button id="expand-btn" class="active" type="button" aria-label="Expand file browser" aria-controls="file-browser" aria-expanded="false">
+    <span class="icon" style="width: 18px; height: 18px; --icon-url: url('/icons/folder.svg');" aria-hidden="true"></span>
     <span>Files</span>
   </button>
 
@@ -144,7 +144,12 @@
 
       const setExpanded = (expanded) => {
         fileBrowser.classList.toggle('collapsed', !expanded);
+        fileBrowser.toggleAttribute('inert', !expanded);
+        fileBrowser.setAttribute('aria-hidden', String(!expanded));
         expandBtn.classList.toggle('active', !expanded);
+        expandBtn.toggleAttribute('inert', expanded);
+        expandBtn.setAttribute('aria-hidden', String(expanded));
+        expandBtn.setAttribute('aria-expanded', String(expanded));
       };
 
       document.getElementById('collapse-btn').onclick = () => setExpanded(false);

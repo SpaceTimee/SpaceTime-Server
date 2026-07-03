@@ -7,7 +7,7 @@ export const onRequest = async (context: EventContext<Env, 'path', unknown>) => 
     ...context,
     params: {
       ...context.params,
-      path: ['status', ...(pathSegments || [])]
+      path: ['status', ...(pathSegments ?? [])]
     },
     data: {
       targetUrl: `${context.env.STATUS_URL || 'http://localhost'}/${pathSegments?.join('/') || 'feed.rss'}`

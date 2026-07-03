@@ -20,12 +20,12 @@
     body {
       font-family: system-ui, -apple-system, sans-serif;
       margin: 0;
-      padding: 0;
       color: var(--color-text);
       background: var(--color-bg);
       display: flex;
       flex-direction: column;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
     }
 
@@ -42,8 +42,6 @@
     }
 
     .nav-btn {
-      background: transparent;
-      border: none;
       border-radius: 50%;
       width: 32px;
       height: 32px;
@@ -102,7 +100,6 @@
 
     table {
       width: 100%;
-      border-collapse: separate;
       border-spacing: 0 2px;
       font-size: 14px;
       padding: 0 8px;
@@ -191,7 +188,6 @@
       width: 16px;
       height: 16px;
       margin-right: 8px;
-      vertical-align: text-bottom;
       flex-shrink: 0;
       display: inline-block;
       background: currentColor;
@@ -268,12 +264,12 @@
 
 <body>
   <header class="toolbar">
-    <a href="{{PARENT_LINK}}" class="nav-btn {{PARENT_DISABLED}}" title="Up" aria-label="Up one level">
-      <div class="icon" style="--icon-url: url('/icons/up.svg');"></div>
+    <a class="nav-btn {{PARENT_DISABLED}}" {{PARENT_ATTRIBUTES}} title="Up" aria-label="Up one level">
+      <span class="icon" style="--icon-url: url('/icons/up.svg');" aria-hidden="true"></span>
     </a>
     <div class="path-container">
-      <input type="text" class="path-input" value="{{PATH}}" id="path-input" spellcheck="false"
-        aria-label="Current path">
+      <input id="path-input" class="path-input" value="{{PATH}}" spellcheck="false" autocomplete="off"
+        autocapitalize="off" inputmode="url" enterkeyhint="go" aria-label="Current path">
     </div>
   </header>
 
@@ -281,11 +277,11 @@
     <table>
       <thead>
         <tr>
-          <th data-key="name" class="col-name">Name <div class="sort-icon"></div>
+          <th class="col-name" scope="col" data-key="name">Name <span class="sort-icon" aria-hidden="true"></span>
           </th>
-          <th data-key="size" class="col-size">Size <div class="sort-icon"></div>
+          <th class="col-size" scope="col" data-key="size">Size <span class="sort-icon" aria-hidden="true"></span>
           </th>
-          <th data-key="date" class="col-date">Date <div class="sort-icon"></div>
+          <th class="col-date" scope="col" data-key="date">Date <span class="sort-icon" aria-hidden="true"></span>
           </th>
         </tr>
       </thead>
@@ -293,7 +289,7 @@
     </table>
   </main>
 
-  <script type="application/json" id="file-data">{{FILES_JSON}}</script>
+  <script id="file-data" type="application/json">{{FILES_JSON}}</script>
 
   <script>
     (() => {
@@ -327,7 +323,7 @@
         });
 
         tableBody.innerHTML = fileData.map(file => `<tr>
-          <td><a href="${escapeHtml(file.link)}" class="file-link"${file.isDir ? '' : ' target="_blank"'}><div class="icon ${file.icon}"></div>${escapeHtml(file.name)}</a></td>
+          <td><a class="file-link" href="${escapeHtml(file.link)}"${file.isDir ? '' : ' target="_blank" rel="noopener noreferrer"'}><span class="icon ${file.icon}" aria-hidden="true"></span>${escapeHtml(file.name)}</a></td>
           <td class="col-size">${escapeHtml(file.size)}</td>
           <td class="col-date">${escapeHtml(file.date)}</td>
         </tr>`).join('');

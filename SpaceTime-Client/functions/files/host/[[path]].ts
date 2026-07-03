@@ -12,7 +12,7 @@ export const onRequest = async (context: EventContext<Env, 'path', unknown>) => 
     ...context,
     params: {
       ...context.params,
-      path: ['host', ...(pathSegments || [])]
+      path: ['host', ...(pathSegments ?? [])]
     },
     data: {
       targetUrl: fileMap[pathSegments?.join('/') || 'Cealing-Host.json']
