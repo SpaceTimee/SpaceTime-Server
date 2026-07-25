@@ -10,13 +10,13 @@ export const onRequest = async ({ request, env }: EventContext<Env, string, unkn
     return Response.json({ error: 'Bad Request', message: 'Invalid or missing messages' }, { status: 400 })
 
   try {
-    const response = await fetch(`${env.GATEWAY_URL}/chat/completions`, {
+    const response = await fetch(`${env.PROVIDER_URL}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${env.GATEWAY_KEY}`
+        Authorization: `Bearer ${env.PROVIDER_KEY}`
       },
-      body: JSON.stringify({ model: env.GATEWAY_MODEL, messages })
+      body: JSON.stringify({ model: env.PROVIDER_MODEL, messages })
     })
 
     if (!response.ok) throw new Error()
@@ -28,6 +28,6 @@ export const onRequest = async ({ request, env }: EventContext<Env, string, unkn
 
     return Response.json({ content })
   } catch {
-    return Response.json({ error: 'Gateway Error', message: 'Unable to complete chat' }, { status: 502 })
+    return Response.json({ error: 'Provider Error', message: 'Unable to complete chat' }, { status: 502 })
   }
 }

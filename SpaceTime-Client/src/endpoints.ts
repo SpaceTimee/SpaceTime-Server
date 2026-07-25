@@ -28,14 +28,14 @@ export const endpoints = [
   {
     name: '补全 AI 对话',
     method: 'POST',
-    path: '/api/gateway/chat',
-    href: '/api/gateway/chat'
+    path: '/api/provider/chat',
+    href: '/api/provider/chat'
   },
   {
     name: '列出 AI 模型',
     method: 'GET',
-    path: '/api/gateway/models',
-    href: '/api/gateway/models'
+    path: '/api/provider/models',
+    href: '/api/provider/models'
   },
   {
     name: '补全 AI 对话 (赞助)',
