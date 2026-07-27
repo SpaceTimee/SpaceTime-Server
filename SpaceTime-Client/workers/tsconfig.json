@@ -4,12 +4,17 @@
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
     "noEmit": true,
     "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
-    "types": ["@cloudflare/workers-types"]
+    "types": []
   },
-  "include": ["**/*.ts", "../env.d.ts"]
+  "include": ["worker-configuration.d.ts", "src/**/*.ts"]
 }

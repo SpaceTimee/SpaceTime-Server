@@ -11,4 +11,7 @@ interface Env {
   PROVIDER_KEY: string
   PROVIDER_MODEL: string
   ROUTER_URL: string
+  CENSOR_CALLBACK_TOKEN: string
+  CENSOR_GITHUB_TOKEN: string
+  CENSOR_SESSION_NAMESPACE: DurableObjectNamespace
 }

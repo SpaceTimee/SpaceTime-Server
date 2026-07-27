@@ -20,6 +20,12 @@ export const endpoints = [
     href: '/api/host/check'
   },
   {
+    name: '测试审查延迟',
+    method: 'GET',
+    path: '/api/censor/check?[string]targets&[number]port',
+    href: '/api/censor/check'
+  },
+  {
     name: '透传代理请求',
     method: 'ANY',
     path: '/api/prox/forward/[string]?[any]',

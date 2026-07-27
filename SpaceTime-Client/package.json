@@ -6,13 +6,18 @@
   "scripts": {
     "dev": "run-s build serve",
     "serve": "wrangler pages dev dist",
+    "worker:deploy": "wrangler deploy --config workers/wrangler.toml",
+    "worker:dev": "wrangler dev --config workers/wrangler.toml",
+    "worker:start": "wrangler dev --config workers/wrangler.toml",
+    "worker:cf-typegen": "wrangler types workers/worker-configuration.d.ts --config workers/wrangler.toml",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
+    "type-check": "vue-tsc --build --force && tsc --project functions/tsconfig.json --noEmit && tsc --project workers/tsconfig.json --noEmit",
     "lint": "eslint . --fix",
     "format": "prettier --write ."
   },
+  "packageManager": "pnpm@11.17.0",
   "dependencies": {
     "vue": "^3.5.39"
   },
@@ -38,7 +43,7 @@
     "vite-plugin-sitemap": "^0.8.2",
     "vite-plugin-static-copy": "^4.1.1",
     "vue-tsc": "^3.3.6",
-    "wrangler": "^4.107.0"
+    "wrangler": "^4.114.0"
   },
   "type": "module"
 }

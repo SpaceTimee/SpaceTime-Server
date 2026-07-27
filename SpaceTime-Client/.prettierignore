@@ -1,22 +1,38 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-lerna-debug.log*
-
+# Dependencies
 node_modules
-.DS_Store
+
+# Build outputs
 dist
 dist-ssr
-coverage
-*.local
 
+# Wrangler
+.wrangler
+.dev.vars*
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Generated files
+workers/worker-configuration.d.ts
+*.tsbuildinfo
+
+# Coverage
+coverage
+
+# Cache
+.vite
+
+# Logs
+*.log
+logs
+
+# Cypress
 /cypress/videos/
 /cypress/screenshots/
 
-# Editor directories and files
+# IDE
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -26,10 +42,9 @@ coverage
 *.sln
 *.sw?
 
-# Package Manager
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
+# OS
+.DS_Store
+Thumbs.db
 
-*.tsbuildinfo
-.wrangler/
+# Misc
+*.local
