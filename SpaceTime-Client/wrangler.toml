@@ -1,0 +1,54 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "spacetime-client"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-12-05"
+
+[placement]
+mode = "off"
+
+[vars]
+LINK_URL = "https://link.spacetimee.xyz"
+
+[secrets]
+required = [
+  "API_URL",
+  "CENTER_URL",
+  "BLOG_URL",
+  "STATUS_URL",
+  "PROX_URL",
+  "PROVIDER_URL",
+  "PROVIDER_KEY",
+  "PROVIDER_MODEL",
+  "ROUTER_URL",
+  "CENSOR_CALLBACK_TOKEN",
+  "CENSOR_GITHUB_TOKEN"
+]
+
+[env.production]
+compatibility_date = "2026-06-16"
+
+[env.production.vars]
+LINK_URL = "https://link.spacetimee.xyz"
+
+[env.production.secrets]
+required = [
+  "API_URL",
+  "CENTER_URL",
+  "BLOG_URL",
+  "STATUS_URL",
+  "PROX_URL",
+  "PROVIDER_URL",
+  "PROVIDER_KEY",
+  "PROVIDER_MODEL",
+  "ROUTER_URL",
+  "CENSOR_CALLBACK_TOKEN",
+  "CENSOR_GITHUB_TOKEN"
+]
+
+[env.production.placement]
+mode = "smart"
+
+[[env.production.durable_objects.bindings]]
+name = "CENSOR_SESSION_NAMESPACE"
+class_name = "CensorSession"
+script_name = "spacetime-client"

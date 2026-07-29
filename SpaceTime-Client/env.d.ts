@@ -5,6 +5,7 @@ interface Env {
   CENTER_URL: string
   BLOG_URL: string
   DOCS_URL: string
+  LINK_URL: string
   STATUS_URL: string
   PROX_URL: string
   PROVIDER_URL: string

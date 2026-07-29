@@ -56,6 +56,12 @@ export const endpoints = [
     href: '/api/router/models'
   },
   {
+    name: '验证身份真伪',
+    method: 'GET',
+    path: '/api/verifier/[string]code',
+    href: '/api/verifier'
+  },
+  {
     name: '订阅内置规则',
     method: 'GET',
     path: '/files/host/[string]=Cealing-Host.json',
