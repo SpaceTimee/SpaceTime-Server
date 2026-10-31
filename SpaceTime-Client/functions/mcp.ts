@@ -1,5 +1,5 @@
 const protocolVersion = '2025-03-26'
-const serverInfo = { name: 'SpaceTime Server', version: '0.9.0' }
+const serverInfo = { name: 'SpaceTime Server', version: '0.10.0' }
 const toolsInfo = [
   {
     name: 'generate_host',
@@ -119,6 +119,15 @@ export const onRequest = async ({ request }: EventContext<Env, string, unknown>)
                 inputSchema: { type: 'object', ...tool.inputSchema }
               }))
             })
+
+          case 'prompts/list':
+            return result(id, { prompts: [] })
+
+          case 'resources/list':
+            return result(id, { resources: [] })
+
+          case 'resources/templates/list':
+            return result(id, { resourceTemplates: [] })
 
           case 'tools/call': {
             const name = params?.name as string | undefined
